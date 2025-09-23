@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Image from 'next/image';
+import Link from "next/link";
 const Button = () => {
   const [toast, setToast] = useState(false);
 
@@ -22,10 +23,19 @@ const Button = () => {
 
       <div className="social-links">
         {/* Gmail */}
-        <div id="gmail" className="social-btn flex-center" onClick={copyEmail}>
-          <Image src="/gmailicon.svg" height={24} width={24} alt="Gmail" />
-          <span>Gmail</span>
-        </div>
+
+        <Link
+          href="mailto:lakshya@example.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+            <div id="gmail" className="social-btn flex-center" onClick={copyEmail}>
+              <Image src="/gmailicon.svg" height={24} width={24} alt="Gmail" />
+              <span>Gmail</span>
+            </div>
+          
+        </Link>
+
 
         {/* LinkedIn */}
         <div

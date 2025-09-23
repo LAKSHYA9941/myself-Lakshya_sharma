@@ -67,8 +67,8 @@ section[id] {
 
 /* ~~ BUTTON GRADIENT / GLOW STYLES ~~ */
 .gradient-btn {
-  font-size: 1.4em;
-  padding: 0.6em 0.8em;
+  font-size: 1em;
+  padding: 0.4em 0.6em;
   border-radius: 0.5em;
   border: none;
   background-color: #000;
@@ -97,7 +97,7 @@ section[id] {
   background: linear-gradient(90deg, #aed2ff, #344cb7, #577bc1, #ffeb00);
 }
 .gradient-wrapper.cyan {
-  background: linear-gradient(90deg, #ff00ea, #ff0000, #00fffb);
+  background: linear-gradient(90deg, #ff00ea, #ff0000, #00fffb, #00ff94);
 }
 
 .gradient-wrapper::before {

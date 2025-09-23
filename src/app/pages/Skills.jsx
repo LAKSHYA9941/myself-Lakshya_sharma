@@ -73,19 +73,6 @@ export default function Skills() {
       ],
     },
     {
-      id: "tooling",
-      title: "Tooling & DevOps",
-      emoji: "🧰",
-      blurb:
-        "Automating builds, quality, and deploys to ship with confidence.",
-      points: [
-        "Git workflows, PR reviews, conventional commits",
-        "Vercel deployments and preview workflows",
-        "ESLint + Prettier + TypeScript hygiene",
-        "Env management, basic monitoring",
-      ],
-    },
-    {
       id: "systems",
       title: "Systems & CS",
       emoji: "🧠",
@@ -107,7 +94,7 @@ export default function Skills() {
       points: [
         "Dataset curation and evaluation loops",
         "Tracing and prompt experiments",
-        "Vector DBs (Qdrant), hybrid search",
+        "Vector DBs (Qdrant), hybrid search , Graph DBs (Neo4j) , Memory layer mem0AI",
         "Guards, fallbacks, and cost controls",
       ],
     },
@@ -118,7 +105,6 @@ export default function Skills() {
     "Frontend Development",
     "Backend  Development ",
     "Fullstack Engineering",
-    "DevOps",
     "Generative AI",
     "Agentic AI Systems"
   ];
