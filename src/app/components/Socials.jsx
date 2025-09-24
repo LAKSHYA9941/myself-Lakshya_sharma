@@ -24,17 +24,21 @@ const Button = () => {
       <div className="social-links">
         {/* Gmail */}
 
-        <Link
-          href="mailto:lakshya@example.com"
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* Gmail */}
+        <div
+          id="gmail"
+          className="social-btn flex-center"
+          onClick={() =>
+            window.open(
+              "https://mail.google.com/mail/?view=cm&fs=1&to=lakshyasharma.9.0.1.2.3@gmail.com",
+              "_blank"
+            )
+          }
         >
-            <div id="gmail" className="social-btn flex-center" onClick={copyEmail}>
-              <Image src="/gmailicon.svg" height={24} width={24} alt="Gmail" />
-              <span>Gmail</span>
-            </div>
-          
-        </Link>
+          <Image src="/gmailicon.svg" height={24} width={24} alt="Gmail" />
+          <span>Gmail</span>
+        </div>
+
 
 
         {/* LinkedIn */}
