@@ -114,53 +114,53 @@ const projects = [
     ],
     image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757794232/Screenshot_95_wv8jcd.png',
   },
-  {
-    name: 'Site Cloner Tool',
-    tagline: 'Browser-based site snapshotter and component extractor.',
-    live: undefined,
-    repo: 'https://github.com/LAKSHYA9941/site_cloner',
-    stack: [
-      { icon: <SiJavascript className="text-[#F7DF1E]" />, name: 'JavaScript' },
-    ],
-    bullets: [
-      'Parses DOM into reusable component blocks',
-      'Downloads assets and resolves dependencies',
-      'One-click export of component library',
-    ],
-    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757794941/cloner_qbcnop.jpg',
-  },
-  {
-    name: 'Browser Agent',
-    tagline: 'Autonomous browser agent for structured tasks and scraping.',
-    live: undefined,
-    repo: undefined,
-    stack: [
-      { icon: <SiTypescript className="text-[#3178C6]" />, name: 'TypeScript' },
-      { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
-    ],
-    bullets: [
-      'Action planning and stateful execution',
-      'Navigation, scraping, and form-filling',
-      'Replayable trajectories and logs',
-    ],
-    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757795276/step-05-fillform_ksykjg.jpg',
-  },
-  {
-    name: 'Simple RAG',
-    tagline: 'Retrieval-Augmented Generation starter with vector store.',
-    live: undefined,
-    repo: undefined,
-    stack: [
-      { icon: <SiTypescript className="text-[#3178C6]" />, name: 'TypeScript' },
-      { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
-    ],
-    bullets: [
-      'Embeddings, chunking, and retrieval',
-      'Citations with source highlighting',
-      'Dataset upload and indexing UI',
-    ],
-    image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757795499/Screenshot_96_e6exxi.png',
-  },
+  // {
+  //   name: 'Site Cloner Tool',
+  //   tagline: 'Browser-based site snapshotter and component extractor.',
+  //   live: undefined,
+  //   repo: 'https://github.com/LAKSHYA9941/site_cloner',
+  //   stack: [
+  //     { icon: <SiJavascript className="text-[#F7DF1E]" />, name: 'JavaScript' },
+  //   ],
+  //   bullets: [
+  //     'Parses DOM into reusable component blocks',
+  //     'Downloads assets and resolves dependencies',
+  //     'One-click export of component library',
+  //   ],
+  //   image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757794941/cloner_qbcnop.jpg',
+  // },
+  // {
+  //   name: 'Browser Agent',
+  //   tagline: 'Autonomous browser agent for structured tasks and scraping.',
+  //   live: undefined,
+  //   repo: undefined,
+  //   stack: [
+  //     { icon: <SiTypescript className="text-[#3178C6]" />, name: 'TypeScript' },
+  //     { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
+  //   ],
+  //   bullets: [
+  //     'Action planning and stateful execution',
+  //     'Navigation, scraping, and form-filling',
+  //     'Replayable trajectories and logs',
+  //   ],
+  //   image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757795276/step-05-fillform_ksykjg.jpg',
+  // },
+  // {
+  //   name: 'Simple RAG',
+  //   tagline: 'Retrieval-Augmented Generation starter with vector store.',
+  //   live: undefined,
+  //   repo: undefined,
+  //   stack: [
+  //     { icon: <SiTypescript className="text-[#3178C6]" />, name: 'TypeScript' },
+  //     { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
+  //   ],
+  //   bullets: [
+  //     'Embeddings, chunking, and retrieval',
+  //     'Citations with source highlighting',
+  //     'Dataset upload and indexing UI',
+  //   ],
+  //   image: 'https://res.cloudinary.com/cloud4lakshya/image/upload/v1757795499/Screenshot_96_e6exxi.png',
+  // },
   {
     name: "RAG F.T. for Chaicode",
     tagline: "Fine-tuned RAG over a company's knowledge base.",
@@ -247,8 +247,13 @@ const Projects = () => {
   return (
     <div className="relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-10 space-y-16">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Projects</h1>
+        <div className="text-center space-y-4">
+          <p className="text-xs uppercase tracking-[0.35em] text-purple-200/80">
+            Work & Craft
+          </p>
+          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 via-fuchsia-400 to-blue-400 bg-clip-text text-transparent">
+            My Projects
+          </h1>
           <p className="text-slate-300 max-w-2xl mx-auto">
             Here are some projects I've built, from full-stack web apps to AI-powered tools.
             Each one taught me something new about shipping quality software.

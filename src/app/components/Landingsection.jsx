@@ -1,12 +1,14 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
 import HoverEffect from "./Hoverit";
+import { motion } from "framer-motion";
 
 export default function LandingSection() {
   const sectionRef = useRef(null);
+  const [mouseTilt, setMouseTilt] = useState({ x: 0, y: 0 });
 
   const lines = [
     "I'm a full-stack AI developer",
@@ -38,6 +40,15 @@ export default function LandingSection() {
       return word;
     });
   }
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left - rect.width / 2;
+    const offsetY = e.clientY - rect.top - rect.height / 2;
+    setMouseTilt({ x: offsetX / 25, y: offsetY / 25 });
+  };
+
+  const handleMouseLeave = () => setMouseTilt({ x: 0, y: 0 });
 
   const handleDownload = async () => {
     const filePath = "/lsr5.pdf";
@@ -83,7 +94,7 @@ export default function LandingSection() {
   return (
     <section
       ref={sectionRef}
-      className="min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-10 py-6 overflow-hidden"
+      className="min-h-[90vh] flex items-center justify-center px-4 sm:px-6 md:px-10 pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden"
     >
       <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
         
@@ -94,7 +105,6 @@ export default function LandingSection() {
             <span className="text-transparent bg-clip-text bg-slate-50 drop-shadow-[0_0_8px_#fff]">
               Lakshya
             </span>{" "}
-            <span className="inline-block animate-wave">👋</span>
           </h1>
 
           <div className="text-sm sm:text-base md:text-xl text-zinc-50 space-y-1">
@@ -138,14 +148,38 @@ export default function LandingSection() {
         </div>
 
         {/* Right side - Image */}
-        <div className="flex-shrink-0 flex justify-center fade-blur">
-          <Image
-            src="/mine2.jpeg"
-            width={400}
-            height={400}
-            alt="Lakshya"
-            className="rounded-3xl drop-shadow-[0_0_8px_#fff] h-auto w-full max-w-[180px] sm:max-w-[250px] md:max-w-[350px] lg:max-w-[400px] object-contain"
-          />
+        <div className="flex-shrink-0 flex justify-center fade-blur mt-10 md:mt-0">
+          <motion.div
+            className="relative group"
+            style={{
+              transform: `perspective(1000px) rotateY(${mouseTilt.x}deg) rotateX(${-mouseTilt.y}deg)`,
+              transition: "transform 0.15s ease-out"
+            }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div className="absolute -inset-6 bg-gradient-to-br from-cyan-500/15 via-purple-500/15 to-sky-500/15 blur-3xl opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
+            <div className="relative w-[220px] sm:w-[260px] md:w-[320px] lg:w-[360px] aspect-[3/4] rounded-[2.5rem] border border-white/15 bg-white/5 backdrop-blur-md overflow-hidden shadow-[0_35px_60px_-25px_rgba(15,23,42,0.75)]">
+              <Image
+                src="/mine2.jpeg"
+                alt="Lakshya"
+                fill
+                priority
+                sizes="(min-width: 1024px) 360px, (min-width: 768px) 320px, 220px"
+                className="object-cover object-top"
+              />
+            </div>
+            <motion.div
+              className="absolute -top-8 -right-6 h-20 w-20 rounded-full bg-cyan-400/35 blur-xl"
+              animate={{ y: [0, -15, 0], scale: [1, 1.15, 1] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute -bottom-10 -left-8 h-24 w-24 rounded-full bg-purple-500/30 blur-2xl"
+              animate={{ y: [0, 18, 0], scale: [1, 1.1, 1] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+            />
+          </motion.div>
         </div>
       </div>
     </section>

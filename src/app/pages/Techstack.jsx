@@ -1,151 +1,195 @@
 "use client";
 // Techstack.jsx
-import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import React, { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-/* ---------- split lists ---------- */
-const stripTop = [
-  /* Languages */
-  { name: 'JavaScript', file: 'js.svg', color: '#f7df1e', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839920/js_mg6btj.svg" },
-  { name: 'TypeScript', file: 'ts.svg', color: '#007acc', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839919/ts_rgke55.svg" },
-  { name: 'Python', file: 'python.svg', color: '#3776ab', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839919/python_in6uz5.svg" },
-  { name: 'HTML', file: 'html.svg', color: '#e34f26', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839919/html_ig7xle.svg" },
-  { name: 'CSS', file: 'css.svg', color: '#1572b6', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839918/css_twcrfz.svg" },
-  { name: 'SQL', file: 'sql.svg', color: '#336791', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839917/sql_i03nrn.svg" },
-  { name: 'GSAP', file: 'gsap.svg', color: '#B4E50D', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839914/gsap_mjec9s.svg" },
+gsap.registerPlugin(ScrollTrigger);
 
-  /* Frontend */
-  { name: 'React', file: 'react.svg', color: '#61dafb', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839920/react_xqwzfz.svg" },
-  { name: 'Next', file: 'nextjs.svg', color: '#ffffff', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839916/nextjs_faikal.svg" },
-  { name: 'Tailwind', file: 'tailwind.svg', color: '#06b6d4', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839920/tailwind_ih4trd.svg" },
-  { name: 'Vite', file: 'vite.svg', color: '#a855f7', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839922/vite_eq3hos.svg" },
-  { name: 'Redux', file: 'redux.svg', color: '#764abc', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839917/redux_u2tetl.svg" },
-  { name: 'React Native', file: 'https://api.iconify.design/simple-icons/react.svg?color=%2361DAFB', color: '#61DAFB' },
-  { name: 'MySQL', file: 'https://api.iconify.design/simple-icons/mysql.svg?color=%234479A1', color: '#4479A1' },
-  { name: 'Docker', file: 'https://api.iconify.design/simple-icons/docker.svg?color=%232496ED', color: '#2496ED' },
-  { name: 'Vercel', file: 'https://api.iconify.design/simple-icons/vercel.svg?color=%23ffffff', color: '#ffffff' },
-  { name: 'Netlify', file: 'https://api.iconify.design/simple-icons/netlify.svg?color=%2300C7B7', color: '#00C7B7' },
+/* ---------- data ---------- */
+const languagesAndFrontend = [
+  "JavaScript",
+  "TypeScript",
+  "Python",
+  "HTML",
+  "CSS",
+  "SQL",
+  "GSAP",
+  "React",
+  "Next.js",
+  "Tailwind CSS",
+  "Vite",
+  "Redux",
+  "React Native",
+  "MySQL",
 ];
 
-const stripBottom = [
-  /* Backend */
-  { name: 'Node', file: 'nodejs.svg', color: '#339933', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839915/nodejs_x2lom9.svg" },
-  { name: 'Express', file: 'express.svg', color: '#7F8CAA', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839915/express_lvxcbe.svg" },
-  { name: 'MongoDB', file: 'mongodb.svg', color: '#47a248', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839917/mongodb_rbghwp.svg" },
-  { name: 'Firebase', file: 'firebase.svg', color: '#ffca28', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839913/firebase_phrmjv.svg" },
-  { name: 'REST', file: 'rest.svg', color: '#6366f1', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839915/rest_bozily.svg" },
-
-  /* Tools */
-  { name: 'Git', file: 'git.svg', color: '#f05032', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839916/git_i6jdjm.svg" },
-  { name: 'GitHub', file: 'github.svg', color: '#ffffff', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839913/github_yve9di.svg" },
-  { name: 'Axios', file: 'axios.svg', color: '#5a29e4', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839913/axios_mvdcgw.svg" },
-  { name: 'Postman', file: 'postman.svg', color: '#ff6c37', src: "https://res.cloudinary.com/cloud4lakshya/image/upload/v1754839917/postman_t2zc8t.svg" },
+const backendAndTools = [
+  "Node.js",
+  "Express",
+  "MongoDB",
+  "Firebase",
+  "REST APIs",
+  "Git",
+  "GitHub",
+  "Axios",
+  "Postman"
 ];
 
-const TechLogo = ({ file, color, name }) => {
-  const finalSrc = file?.startsWith('http') ? file : `/${file}`;
-  const elRef = useRef(null);
+const aiStack = [
+  "Retrieval-Augmented Generation",
+  "Generative AI",
+  "AI Agents",
+  "Agentic Workflows",
+  "Model Context Protocol (MCP)",
+  "LangChain",
+  "LangGraph",
+  "Qdrant",
+  "Mem0",
+  "Neo4j",
+  "Applied AI Solutions"
+];
 
-  useEffect(() => {
-    const prefersReduced = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced || !elRef.current) return;
+const devOpsAndCloud = [
+  "Docker",
+  "Vercel",
+  "Netlify",
+  "CI/CD Pipelines",
+  "GitHub Actions",
+];
 
-    gsap.set(elRef.current, { scale: 1, rotate: 0 });
-    const onEnter = () => gsap.to(elRef.current, { scale: 1.08, rotate: 2, duration: 0.25, ease: "power2.out" });
-    const onLeave = () => gsap.to(elRef.current, { scale: 1, rotate: 0, duration: 0.25, ease: "power2.out" });
-    const node = elRef.current;
-    node.addEventListener('mouseenter', onEnter);
-    node.addEventListener('mouseleave', onLeave);
-    return () => {
-      node.removeEventListener('mouseenter', onEnter);
-      node.removeEventListener('mouseleave', onLeave);
-    };
-  }, []);
+const techCategories = [
+  {
+    title: "Languages & Frontend",
+    subtitle: "Foundational technologies for crafting polished interfaces and robust client experiences.",
+    items: languagesAndFrontend,
+    accent: "from-cyan-500/20 to-blue-500/10",
+    badgeAccent: "from-cyan-400/30 via-cyan-400/10 to-transparent"
+  },
+  {
+    title: "Backend & Tools",
+    subtitle: "Server-side tooling and workflows that keep projects scalable, secure, and maintainable.",
+    items: backendAndTools,
+    accent: "from-violet-500/20 to-fuchsia-500/10",
+    badgeAccent: "from-fuchsia-400/25 via-purple-400/10 to-transparent"
+  },
+  {
+    title: "AI Stack",
+    subtitle: "Frameworks, vector databases, and orchestration tools for building intelligent systems.",
+    items: aiStack,
+    accent: "from-amber-500/20 to-rose-500/10",
+    badgeAccent: "from-amber-300/30 via-rose-300/10 to-transparent"
+  },
+  {
+    title: "DevOps & Cloud",
+    subtitle: "Infrastructure, orchestration, and delivery tooling powering reliable deployments at scale.",
+    items: devOpsAndCloud,
+    accent: "from-emerald-400/20 to-teal-500/10",
+    badgeAccent: "from-emerald-300/25 via-teal-300/10 to-transparent"
+  }
+];
 
-  return (
-    <div
-      ref={elRef}
-      className="w-16 h-16 md:w-24 md:h-24 mx-2 md:mx-3 flex items-center justify-center rounded-xl cursor-pointer"
-      style={{ filter: `drop-shadow(0 0 6px ${color}50)` }}
-      title={name}
-    >
-      <img
-        src={finalSrc}
-        alt={name}
-        className="w-full h-full object-contain"
-        loading="lazy"
-        onError={(e) => (e.currentTarget.style.display = 'none')}
-      />
-    </div>
-  );
-};
+const SkillPill = ({ label, index, accent }) => (
+  <motion.span
+    initial={{ opacity: 0, y: 16, scale: 0.95 }}
+    animate={{ opacity: 1, y: 0, scale: 1 }}
+    transition={{ duration: 0.35, delay: index * 0.04 }}
+    className={`px-4 py-2 md:px-5 md:py-2.5 rounded-full border border-white/10 bg-gradient-to-br ${accent} text-xs md:text-sm lg:text-base text-white/90 font-medium tracking-wide shadow-[0_12px_32px_-18px_rgba(14,116,144,0.65)] hover:-translate-y-0.5 transition-transform duration-300 ease-out backdrop-blur-lg`}
+  >
+    {label}
+  </motion.span>
+);
 
-const LogoGrid = ({ logos }) => (
-  <div className="w-full py-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 place-items-center">
-    {logos.map((t) => (
-      <TechLogo key={t.name} file={t.file} color={t.color} name={t.name} />
+const PillGrid = ({ items, badgeAccent }) => (
+  <div className="w-full flex flex-wrap gap-3 md:gap-4">
+    {items.map((item, idx) => (
+      <SkillPill key={item} label={item} index={idx} accent={badgeAccent} />
     ))}
   </div>
 );
 
 /* ---------- Main ---------- */
 export default function Techstack() {
+  const sectionRef = useRef(null);
+  const titleRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+
+  useEffect(() => {
+    if (!titleRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        titleRef.current,
+        { x: -120, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%"
+          }
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <>
-      <div className="flex flex-col justify-center items-center min-h-screen overflow-hidden w-full">
-        <div className="z-10 w-full max-w-7xl mx-auto px-6">
-          {/* animated gradient title */}
-          <div className="flex flex-col items-center justify-center py-10 text-center">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-white ">
-              Techstack
-            </h1>
-            <p className="text-slate-300 max-w-3xl mt-3">
-              I build primarily with JavaScript/TypeScript around React and Next.js, and I love
-              pairing clean UI with strong fundamentals. Below is the toolbox I’m comfortable shipping with.
-            </p>
-          </div>
-
-          {/* languages & frontend */}
-          <div className="animate-fadeInUp stagger-100">
-            <LogoGrid logos={stripTop} />
-            <LogoGrid logos={stripBottom} />
-          </div>
-
-          {/* AI section with glow title */}
-          <div className="flex items-center justify-center py-8">
-            <h2 className="text-2xl md:text-4xl font-semibold text-white">
-              AI Stack
-            </h2>
-          </div>
-          <div className="animate-fadeInUp stagger-200">
-            <LogoGrid
-              logos={[
-                { name: 'RAG', file: 'rag.png', color: '#f59e0b' },
-                { name: 'Generative AI', file: 'https://api.iconify.design/mdi/creation.svg?color=%23e879f9', color: '#e879f9' },
-                { name: 'AI Agents', file: 'agents.png', color: '#a3e635' },
-                { name: 'Agentic Workflows', file: 'https://api.iconify.design/mdi/graph-outline.svg?color=%238b5cf6', color: '#8b5cf6' },
-                { name: 'MCP', file: 'MCPnobg.png', color: '#6ee7b7' },
-                { name: 'LangChain', file: 'https://api.iconify.design/simple-icons/langchain.svg?color=%2300bf8f', color: '#00bf8f' },
-                { name: 'LangGraph', file: 'langgraph.png', color: '#00bf8f' },
-                { name: 'Qdrant', file: 'qdrant.png', color: '#8256d1' },
-                { name: 'Mem0', file: 'mem0.png', color: '#fde047' },
-                { name: 'Neo4j', file: 'https://api.iconify.design/simple-icons/neo4j.svg?color=%2300A3E0', color: '#00A3E0' },
-              ]}
-            />
-          </div>
-        </div>
+    <section
+      id="techstack"
+      ref={sectionRef}
+      className="relative min-h-screen py-24 px-6 overflow-hidden"
+    >
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 left-1/3 w-96 h-96 rounded-full bg-cyan-500/15 blur-[140px]" />
+        <div className="absolute top-1/2 -translate-y-1/2 right-1/4 w-[28rem] h-[28rem] rounded-full bg-purple-500/10 blur-[160px]" />
+        <div className="absolute bottom-0 left-1/4 w-[22rem] h-[22rem] rounded-full bg-emerald-500/10 blur-[140px]" />
       </div>
 
-      {/* global fade-in keyframes (inline) */}
-      <style jsx global>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
-        .stagger-100 { animation-delay: 0.1s; }
-        .stagger-200 { animation-delay: 0.2s; }
-      `}</style>
-    </>
+      <div className="relative  z-10 max-w-full mx-auto">
+        <div className="text-center mb-16 space-y-4">
+          <p className="text-sm uppercase tracking-[0.35em] text-cyan-300/80">Toolbox</p>
+          <h2
+            ref={titleRef}
+            className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-sky-400 via-cyan-200 to-indigo-400 bg-clip-text text-transparent"
+          >
+            Tech Stack & Ecosystem
+          </h2>
+          <p className="max-w-3xl mx-auto text-base md:text-lg text-slate-200/80">
+            A curated blend of languages, frameworks, and AI-first tooling I rely on to ship resilient products quickly.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+          {techCategories.map(({ title, subtitle, items, accent, badgeAccent }, categoryIndex) => (
+            <motion.div
+              key={title}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
+              className={`relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_30px_70px_-35px_rgba(15,23,42,0.65)] px-6 py-10 md:px-10`}
+            >
+              <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${accent} opacity-50`} />
+              <div className="relative z-10 flex flex-col gap-6">
+                <div className="space-y-2">
+                  <h3 className="text-2xl md:text-3xl font-semibold text-white drop-shadow-sm">
+                    {title}
+                  </h3>
+                  <p className="text-slate-100/70 text-sm md:text-base max-w-3xl">
+                    {subtitle}
+                  </p>
+                </div>
+
+                <PillGrid items={items} badgeAccent={badgeAccent} />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

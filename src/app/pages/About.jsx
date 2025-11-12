@@ -18,9 +18,15 @@ export default function About() {
       <div className="w-full max-w-7xl mx-auto space-y-16">
 
         {/* Heading */}
-        <h2 className="text-3xl md:text-4xl font-bold text-center border-b border-white/20 pb-3">
-          About Me
-        </h2>
+        <div className="text-center space-y-3 pb-4">
+          <p className="text-xs uppercase tracking-[0.35em] text-amber-200/80">Who I Am</p>
+          <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-rose-400 via-orange-300 to-amber-400 bg-clip-text text-transparent">
+            About Me
+          </h2>
+          <p className="max-w-2xl mx-auto text-sm md:text-base text-white/70">
+            Building meaningful products with equal love for clean UI, resilient systems, and collaborative problem solving.
+          </p>
+        </div>
 
         {/* Two-column layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
@@ -41,12 +47,6 @@ export default function About() {
               className="w-full h-auto max-w-sm drop-shadow-xl"
             />
           </div>
-        </div>
-
-        {/* Full-width children below */}
-        <div className="space-y-20 pt-10">
-          <Certis />
-          <Education />
         </div>
       </div>
     </section>
