@@ -94,7 +94,7 @@ export default function LandingSection() {
   return (
     <section
       ref={sectionRef}
-      className="min-h-[90vh] flex items-center justify-center px-4 sm:px-6 md:px-10 pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden"
+      className="min-h-[90vh] flex items-center justify-center overflow-hidden"
     >
       <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
         

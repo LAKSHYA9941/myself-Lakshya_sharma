@@ -9,8 +9,6 @@ export default function About() {
     'I am a Full Stack Developer with a passion for building dynamic and responsive web applications.',
     'My expertise lies in JavaScript, React.js, Node.js, and MongoDB, and I am proficient in using React Native for cross-platform mobile app development. I am also familiar with popular libraries and frameworks such as Redux, React Router, and Axios.',
     'I have experience in building web applications using various technologies, including HTML, CSS, and JavaScript. I am skilled in creating responsive and user-friendly interfaces that meet the needs of my clients.',
-    'I am a self-motivated and hardworking individual who thrives in a dynamic and fast-paced environment. I am always looking for new opportunities to expand my skills and knowledge in web development.',
-    'I enjoy working on challenging projects that require innovative problem-solving and collaboration. My goal is to continuously learn and grow in the field of web development.',
   ];
 
   return (
@@ -38,13 +36,13 @@ export default function About() {
           </div>
 
           {/* Image – hidden on small screens */}
-          <div className="hidden md:flex justify-center">
+          <div className="hidden md:flex justify-center items-center">
             <Image
               src="/about.svg"
               alt="about"
-              width={400}
-              height={400}
-              className="w-full h-auto max-w-sm drop-shadow-xl"
+              width={300}
+              height={200}
+              className=" drop-shadow-xl"
             />
           </div>
         </div>

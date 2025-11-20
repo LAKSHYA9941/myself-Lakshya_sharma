@@ -142,7 +142,7 @@ export default function Techstack() {
     <section
       id="techstack"
       ref={sectionRef}
-      className="relative min-h-screen py-24 px-6 overflow-hidden"
+      className="flex min-h-screen py-24 px-6 overflow-hidden"
     >
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-24 left-1/3 w-96 h-96 rounded-full bg-cyan-500/15 blur-[140px]" />
@@ -152,7 +152,6 @@ export default function Techstack() {
 
       <div className="relative  z-10 max-w-full mx-auto">
         <div className="text-center mb-16 space-y-4">
-          <p className="text-sm uppercase tracking-[0.35em] text-cyan-300/80">Toolbox</p>
           <h2
             ref={titleRef}
             className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-sky-400 via-cyan-200 to-indigo-400 bg-clip-text text-transparent"
