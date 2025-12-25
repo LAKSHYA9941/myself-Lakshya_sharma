@@ -96,11 +96,14 @@ export default function LandingSection() {
       ref={sectionRef}
       className="min-h-[90vh] flex items-center justify-center overflow-hidden"
     >
-      <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+      <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12 px-4 
+        [grid-template-areas:'text''image''buttons'] 
+        md:[grid-template-areas:'text_image''buttons_image']"
+      >
         
-        {/* Left side */}
-        <div className="flex-1 space-y-6 text-center md:text-left z-10 fade-blur">
-          <h1 className="text-lg sm:text-6xl md:text-6xl font-bold text-white">
+        {/* Text Block */}
+        <div className="space-y-6 text-center md:text-left z-10 fade-blur [grid-area:text]">
+          <h1 className="text-4xl sm:text-6xl md:text-6xl font-bold text-white leading-tight">
             Hi, I'm{" "}
             <span className="text-transparent bg-clip-text bg-slate-50 drop-shadow-[0_0_8px_#fff]">
               Lakshya
@@ -109,46 +112,15 @@ export default function LandingSection() {
 
           <div className="text-sm sm:text-base md:text-xl text-zinc-50 space-y-1">
             {lines.map((line, i) => (
-              <p key={i} className="fade-blur">
+              <p key={i} className="fade-blur leading-relaxed">
                 {highlightWords(line)}
               </p>
             ))}
           </div>
-
-          {/* Buttons */}
-          <div className="flex flex-row flex-wrap justify-center md:justify-start gap-2 pt-4 fade-blur">
-            {/* Contact Me */}
-            <Link href="/#contact">
-              <span className="gradient-wrapper fire inline-block">
-                <button className="gradient-btn px-3 sm:px-4 py-1 text-xs sm:text-sm rounded-md">
-                  Contact Me
-                </button>
-              </span>
-            </Link>
-
-            {/* Explore Projects */}
-            <Link href="/#projects">
-              <span className="gradient-wrapper sky inline-block">
-                <button className="gradient-btn px-3 sm:px-4 py-1 text-xs sm:text-sm rounded-md">
-                  Explore Projects
-                </button>
-              </span>
-            </Link>
-
-            {/* Download Resume */}
-            <span className="gradient-wrapper cyan inline-block">
-              <button
-                onClick={handleDownload}
-                className="gradient-btn px-3 sm:px-4 py-1 text-xs sm:text-sm rounded-md"
-              >
-                Download Resume
-              </button>
-            </span>
-          </div>
         </div>
 
-        {/* Right side - Image */}
-        <div className="flex-shrink-0 flex justify-center fade-blur mt-10 md:mt-0">
+        {/* Image Block */}
+        <div className="flex-shrink-0 flex justify-center fade-blur mt-6 md:mt-0 [grid-area:image]">
           <motion.div
             className="relative group"
             style={{
@@ -180,6 +152,43 @@ export default function LandingSection() {
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
             />
           </motion.div>
+        </div>
+
+        {/* Buttons Block */}
+        <div className="flex flex-row flex-wrap justify-center md:justify-start gap-3 pt-4 fade-blur [grid-area:buttons] md:-mt-10 self-start">
+          <Link href="/#contact">
+            <motion.span
+              whileTap={{ scale: 0.95 }}
+              className="gradient-wrapper fire inline-block"
+            >
+              <button className="gradient-btn px-4 sm:px-5 py-2 text-xs sm:text-sm rounded-md">
+                Contact Me
+              </button>
+            </motion.span>
+          </Link>
+
+          <Link href="/#projects">
+            <motion.span
+              whileTap={{ scale: 0.95 }}
+              className="gradient-wrapper sky inline-block"
+            >
+              <button className="gradient-btn px-4 sm:px-5 py-2 text-xs sm:text-sm rounded-md">
+                Explore Projects
+              </button>
+            </motion.span>
+          </Link>
+
+          <motion.span
+            whileTap={{ scale: 0.95 }}
+            className="gradient-wrapper cyan inline-block"
+          >
+            <button
+              onClick={handleDownload}
+              className="gradient-btn px-4 sm:px-5 py-2 text-xs sm:text-sm rounded-md"
+            >
+              Download Resume
+            </button>
+          </motion.span>
         </div>
       </div>
     </section>

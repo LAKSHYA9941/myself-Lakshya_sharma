@@ -114,7 +114,7 @@ function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-md">
+    <header className="sticky top-0 z-50 backdrop-blur-md transform-gpu will-change-[background-color,backdrop-filter]">
       <nav className="px-4 lg:px-6 py-3">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
           {/* Creative Logo with initials */}
@@ -140,7 +140,7 @@ function Navbar() {
                 isActive
                   ? "text-white before:scale-100 before:opacity-100 before:bg-cyan-400/60 border border-cyan-400"
                   : "text-slate-400 border border-transparent hover:text-white hover:before:scale-100 hover:before:opacity-100 hover:before:bg-[#B13BFF]/50",
-                "transform-gpu",
+                "transform-gpu will-change-transform",
               ].join(" ");
               return (
                 <li key={path}>

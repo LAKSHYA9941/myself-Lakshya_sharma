@@ -95,7 +95,7 @@ const SkillPill = ({ label, index, accent }) => (
     initial={{ opacity: 0, y: 16, scale: 0.95 }}
     animate={{ opacity: 1, y: 0, scale: 1 }}
     transition={{ duration: 0.35, delay: index * 0.04 }}
-    className={`px-4 py-2 md:px-5 md:py-2.5 rounded-full border border-white/10 bg-gradient-to-br ${accent} text-xs md:text-sm lg:text-base text-white/90 font-medium tracking-wide shadow-[0_12px_32px_-18px_rgba(14,116,144,0.65)] hover:-translate-y-0.5 transition-transform duration-300 ease-out backdrop-blur-lg`}
+    className={`px-4 py-2 md:px-5 md:py-2.5 rounded-full border border-white/10 bg-white/10 text-xs md:text-sm lg:text-base text-white/90 font-medium tracking-wide shadow-md hover:-translate-y-0.5 transition-all duration-300 ease-out`}
   >
     {label}
   </motion.span>
@@ -144,12 +144,6 @@ export default function Techstack() {
       ref={sectionRef}
       className="flex min-h-screen py-24 px-6 overflow-hidden"
     >
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-24 left-1/3 w-96 h-96 rounded-full bg-cyan-500/15 blur-[140px]" />
-        <div className="absolute top-1/2 -translate-y-1/2 right-1/4 w-[28rem] h-[28rem] rounded-full bg-purple-500/10 blur-[160px]" />
-        <div className="absolute bottom-0 left-1/4 w-[22rem] h-[22rem] rounded-full bg-emerald-500/10 blur-[140px]" />
-      </div>
-
       <div className="relative  z-10 max-w-full mx-auto">
         <div className="text-center mb-16 space-y-4">
           <h2
@@ -170,7 +164,7 @@ export default function Techstack() {
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
-              className={`relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_30px_70px_-35px_rgba(15,23,42,0.65)] px-6 py-10 md:px-10`}
+              className={`relative overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/40 shadow-[0_30px_70px_-35px_rgba(15,23,42,0.65)] px-6 py-10 md:px-10 will-change-transform`}
             >
               <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${accent} opacity-50`} />
               <div className="relative z-10 flex flex-col gap-6">

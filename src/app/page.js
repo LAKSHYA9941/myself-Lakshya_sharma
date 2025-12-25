@@ -29,9 +29,8 @@ export default function Page() {
           ease: "power3.out",
           scrollTrigger: {
             trigger: section,
-            start: "top 80%",   // when section enters
-            end: "top 20%",     // when section is near top
-            scrub: true,        // smooth animation forward/back
+            start: "top 85%",   // when section enters
+            once: true          // trigger animation once instead of scrubbing
           },
         }
       );
