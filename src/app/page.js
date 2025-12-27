@@ -83,9 +83,7 @@ export default function Page() {
           <Projects />
         </section>
 
-        <section id="contact" data-theme="contact" className="min-h-full flex items-center">
-          <Contacts />
-        </section>
+        <Contacts />
       </main>
     </>
   );
