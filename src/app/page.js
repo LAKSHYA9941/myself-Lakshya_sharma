@@ -59,10 +59,10 @@ export default function Page() {
     <>
       <main className="relative bg-black">
         <Aurora
-          colorStops={["#08CB00", "#00CAFF", "#FF2DD1"]}
-          blend={0.5}
-          amplitude={1.0}
-          speed={0.5}
+          colorStops={["#1e3a8a", "#2563eb", "#3b82f6"]}
+          blend={0.4}
+          amplitude={0.9}
+          speed={0.4}
         />
         <Navbar />
         <LandingPage />
