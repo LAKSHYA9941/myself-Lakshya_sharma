@@ -114,7 +114,8 @@ export default function SmoothScrollProvider({ children }) {
 
     if (prefersReducedMotion) return () => { };
 
-    (async () => {
+    // Defer Lenis initialization to prevent blocking initial render
+    const initLenis = async () => {
       try {
         const mod = await import("@studio-freight/lenis");
         const Lenis = mod.default || mod;
@@ -124,7 +125,7 @@ export default function SmoothScrollProvider({ children }) {
           smoothTouch: false,
           gestureOrientation: "vertical",
           easing: (t) => 1 - Math.pow(2, -10 * t),
-          autoRaf: false, // important, we control raf manually
+          autoRaf: false,
         });
 
         // expose globally (optional)
@@ -151,29 +152,24 @@ export default function SmoothScrollProvider({ children }) {
           },
         });
 
-        // run RAF
-        // run RAF
+        // Optimized RAF loop
         const raf = (time) => {
-          lenis.raf(time);          // keep lenis smooth
-          ScrollTrigger.update();   // sync GSAP
+          lenis.raf(time);
+          ScrollTrigger.update();
           rafId = requestAnimationFrame(raf);
         };
         rafId = requestAnimationFrame(raf);
 
         // refresh ScrollTrigger after Lenis init
         ScrollTrigger.refresh();
-
-
-
-        return () => {
-          if (rafId) cancelAnimationFrame(rafId);
-          ScrollTrigger.removeEventListener("refresh", () => lenis.update());
-          lenis.destroy();
-        };
       } catch (e) {
         console.warn("Lenis not installed:", e);
       }
-    })();
+    };
+
+    // Use requestIdleCallback to defer initialization
+    const idleCallback = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+    idleCallback(initLenis);
 
     return () => {
       if (rafId) cancelAnimationFrame(rafId);

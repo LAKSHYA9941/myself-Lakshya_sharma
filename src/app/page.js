@@ -17,35 +17,41 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Page() {
   useEffect(() => {
-    // Animate each section on enter/leave
-    gsap.utils.toArray("section").forEach((section) => {
-      gsap.fromTo(
-        section,
-        { opacity: 0, y: 100 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 85%",   // when section enters
-            once: true          // trigger animation once instead of scrubbing
-          },
-        }
-      );
-    });
+    // Defer non-critical animations to idle time
+    const idleCallback = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
 
-    // Optional: animate navbar background on scroll
-    gsap.to("nav", {
-      backgroundColor: "rgba(0,0,0,0.8)",
-      duration: 0.5,
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
+    idleCallback(() => {
+      // Animate each section on enter/leave - optimized
+      gsap.utils.toArray("section").forEach((section) => {
+        gsap.fromTo(
+          section,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 90%",
+              once: true,
+              fastScrollEnd: true
+            },
+          }
+        );
+      });
+
+      // Optional: animate navbar background on scroll
+      gsap.to("nav", {
+        backgroundColor: "rgba(0,0,0,0.8)",
+        duration: 0.3,
+        scrollTrigger: {
+          trigger: "body",
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.5,
+        },
+      });
     });
   }, []);
 

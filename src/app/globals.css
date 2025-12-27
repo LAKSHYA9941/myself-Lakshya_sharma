@@ -14,6 +14,9 @@ html {
 
 body {
   font-family: var(--font-montserrat);
+  /* Enable GPU acceleration for smooth scrolling */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -32,6 +35,9 @@ h6 {
 /* Ensure in-page anchor targets are not obscured by the sticky navbar */
 section[id] {
   scroll-margin-top: 88px;
+  /* Optimize rendering for off-screen sections */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
 }
 
 
@@ -77,6 +83,9 @@ section[id] {
   box-shadow: 2px 2px 3px #000000b4;
   position: relative;
   z-index: 2;
+  /* Hardware acceleration */
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 .gradient-wrapper {
@@ -85,6 +94,8 @@ section[id] {
   padding: 3px;
   border-radius: 0.9em;
   transition: all 0.4s ease;
+  /* Hardware acceleration */
+    transform: translateZ(0);
 }
 
 /* purple-fire wrapper */
@@ -110,6 +121,8 @@ section[id] {
   filter: blur(0);
   transition: filter 0.4s ease, opacity 0.4s ease;
   opacity: 0;
+  /* Hardware acceleration */
+    transform: translateZ(0);
 }
 
 .gradient-wrapper:hover::before {
@@ -122,3 +135,15 @@ section[id] {
   opacity: 1;
 }
 
+/* Performance optimizations */
+* {
+  /* Reduce paint operations */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: no-preference) {
+  .fade-blur {
+    will-change: opacity, filter, transform;
+  }
+}

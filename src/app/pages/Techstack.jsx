@@ -121,15 +121,16 @@ export default function Techstack() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         titleRef.current,
-        { x: -120, opacity: 0 },
+        { x: -80, opacity: 0 },
         {
           x: 0,
           opacity: 1,
-          duration: 1,
-          ease: "power4.out",
+          duration: 0.8,
+          ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 75%"
+            start: "top 80%",
+            once: true
           }
         }
       );

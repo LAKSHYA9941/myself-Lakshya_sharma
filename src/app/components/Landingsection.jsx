@@ -76,14 +76,16 @@ export default function LandingSection() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".fade-blur",
-        { opacity: 0, filter: "blur(20px)", y: 30 },
+        { opacity: 0, filter: "blur(20px)", y: 30, willChange: "opacity, filter, transform" },
         {
           opacity: 1,
           filter: "blur(0px)",
           y: 0,
-          duration: 1.2,
-          stagger: 0.2,
-          ease: "power3.out"
+          duration: 0.9,
+          stagger: 0.15,
+          ease: "power3.out",
+          clearProps: "willChange",
+          force3D: true
         }
       );
     }, sectionRef);
@@ -137,8 +139,11 @@ export default function LandingSection() {
                 alt="Lakshya"
                 fill
                 priority
+                loading="eager"
+                fetchPriority="high"
                 sizes="(min-width: 1024px) 360px, (min-width: 768px) 320px, 220px"
                 className="object-cover object-top"
+                quality={90}
               />
             </div>
             <motion.div

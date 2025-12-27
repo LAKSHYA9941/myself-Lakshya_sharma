@@ -47,20 +47,27 @@ function Navbar() {
 
     ratiosRef.current = Object.fromEntries(sections.map((s) => [s.id, 0]));
 
+    let ticking = false;
     const pickByCenter = () => {
-      const centerY = window.innerHeight / 2;
-      let bestId = null;
-      let bestDist = Infinity;
-      sections.forEach((sec) => {
-        const rect = sec.getBoundingClientRect();
-        const secCenter = rect.top + rect.height / 2;
-        const dist = Math.abs(secCenter - centerY);
-        if (dist < bestDist) {
-          bestDist = dist;
-          bestId = sec.id;
-        }
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const centerY = window.innerHeight / 2;
+        let bestId = null;
+        let bestDist = Infinity;
+        sections.forEach((sec) => {
+          const rect = sec.getBoundingClientRect();
+          const secCenter = rect.top + rect.height / 2;
+          const dist = Math.abs(secCenter - centerY);
+          if (dist < bestDist) {
+            bestDist = dist;
+            bestId = sec.id;
+          }
+        });
+        if (bestId) setActive(bestId);
+        ticking = false;
       });
-      if (bestId) setActive(bestId);
     };
     pickByCenter();
 
@@ -71,20 +78,27 @@ function Navbar() {
           if (!id) return;
           ratiosRef.current[id] = e.isIntersecting ? e.intersectionRatio : 0;
         });
-        let bestId = null;
-        let bestRatio = -1;
-        for (const id of Object.keys(ratiosRef.current)) {
-          const r = ratiosRef.current[id] ?? 0;
-          if (r > bestRatio) {
-            bestRatio = r;
-            bestId = id;
+
+        if (ticking) return;
+        ticking = true;
+
+        requestAnimationFrame(() => {
+          let bestId = null;
+          let bestRatio = -1;
+          for (const id of Object.keys(ratiosRef.current)) {
+            const r = ratiosRef.current[id] ?? 0;
+            if (r > bestRatio) {
+              bestRatio = r;
+              bestId = id;
+            }
           }
-        }
-        if (bestId) setActive(bestId);
+          if (bestId) setActive(bestId);
+          ticking = false;
+        });
       },
       {
         root: null,
-        threshold: [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1],
+        threshold: [0, 0.25, 0.5, 0.75, 1],
         rootMargin: "-45% 0px -45% 0px",
       }
     );
