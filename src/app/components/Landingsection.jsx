@@ -51,7 +51,7 @@ export default function LandingSection() {
   const handleMouseLeave = () => setMouseTilt({ x: 0, y: 0 });
 
   const handleDownload = async () => {
-    const filePath = "/lsr5.pdf";
+    const filePath = "/Lakshya _CV2.pdf";
     const ok =
       typeof window !== "undefined" && window.confirm("Download resume to your device?");
     if (!ok) return;
