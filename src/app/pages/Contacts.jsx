@@ -1,5 +1,5 @@
 "use client";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 
@@ -52,8 +52,6 @@ const cardReveal = {
 };
 
 export default function Contacts() {
-  const shouldReduce = useReducedMotion();
-
   return (
     <footer
       id="contact"
@@ -64,7 +62,7 @@ export default function Contacts() {
 
       {/* Availability */}
       <motion.p
-        variants={shouldReduce ? {} : cardReveal}
+        variants={cardReveal}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -80,7 +78,7 @@ export default function Contacts() {
 
       {/* Contact Cards */}
       <motion.div
-        variants={shouldReduce ? {} : cardReveal}
+        variants={cardReveal}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -120,7 +118,7 @@ export default function Contacts() {
 
       {/* Social Links */}
       <motion.div
-        variants={shouldReduce ? {} : cardReveal}
+        variants={cardReveal}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}

@@ -88,9 +88,27 @@ export default function Navbar() {
     >
       <nav className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-6">
         {/* Logo */}
-        <Link href="/" className="relative z-10">
-          <span className="flex h-10 w-10 items-center justify-center rounded-lg font-mono text-sm font-semibold tracking-wider text-primary bg-surface border border-glass-border transition-all duration-200 hover:shadow-[0_0_12px_var(--color-accent-glow)]">
-            LS
+        <Link href="/" className="relative z-10 group">
+          <span
+            className="flex items-center text-xl font-bold transition-all duration-300"
+            style={{
+              fontFamily: "var(--font-zodiak)",
+              color: "var(--color-highlight)",
+              letterSpacing: "0.04em",
+              fontWeight: 800,
+              textShadow: "0 0 0px transparent",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.textShadow = "0 0 12px var(--color-accent-glow), 0 0 24px rgba(57,255,20,0.2)";
+              e.currentTarget.style.color = "var(--color-accent)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.textShadow = "0 0 0px transparent";
+              e.currentTarget.style.color = "var(--color-highlight)";
+            }}
+          >
+            Laksh
+            <span style={{ color: "var(--color-accent)" }}>.</span>
           </span>
         </Link>
 

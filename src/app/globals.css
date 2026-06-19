@@ -1,3 +1,4 @@
+@import url('https://api.fontshare.com/v2/css?f[]=zodiak@700,800,900&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -17,6 +18,7 @@
   --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+  --font-zodiak: 'Zodiak', Georgia, serif;
 
   --spacing-nav: 64px;
   --spacing-section: clamp(80px, 12vh, 160px);

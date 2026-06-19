@@ -15,6 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500'],
 });
 
+
 export const metadata = {
   metadataBase: new URL('https://myself-lakshya-sharma.vercel.app'),
   title: 'Lakshya Sharma — Full Stack Developer',

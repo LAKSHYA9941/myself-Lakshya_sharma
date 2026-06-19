@@ -1,5 +1,5 @@
 "use client";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
 import Image from "next/image";
 
@@ -107,11 +107,9 @@ const cardReveal = {
 /* ------------------------------------------------------------------ */
 
 function FeaturedCard({ project }) {
-  const shouldReduce = useReducedMotion();
-
   return (
     <motion.div
-      variants={shouldReduce ? {} : cardReveal}
+      variants={cardReveal}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
@@ -174,11 +172,9 @@ function FeaturedCard({ project }) {
 /* ------------------------------------------------------------------ */
 
 function ProjectCard({ project, index }) {
-  const shouldReduce = useReducedMotion();
-
   return (
     <motion.div
-      variants={shouldReduce ? {} : cardReveal}
+      variants={cardReveal}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}

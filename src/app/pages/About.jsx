@@ -1,5 +1,5 @@
 "use client";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
 const paragraphs = [
   "I'm a Full Stack Developer based in Delhi who builds things end-to-end — from database schema to polished mobile UI.",
@@ -19,15 +19,13 @@ const cardReveal = {
 };
 
 export default function About() {
-  const shouldReduce = useReducedMotion();
-
   return (
     <div className="w-full max-w-[1200px] mx-auto px-6">
       {/* Section Label */}
       <p className="section-label">// 01 About</p>
 
       <motion.div
-        variants={shouldReduce ? {} : cardReveal}
+        variants={cardReveal}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}

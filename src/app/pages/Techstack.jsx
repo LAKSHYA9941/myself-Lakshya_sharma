@@ -1,5 +1,5 @@
 "use client";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
 /* ---------- data ---------- */
 const categories = [
@@ -66,11 +66,9 @@ const sectionReveal = {
 
 /* ---------- components ---------- */
 function CategoryBlock({ category, categoryIndex }) {
-  const shouldReduce = useReducedMotion();
-
   return (
     <motion.div
-      variants={shouldReduce ? {} : sectionReveal}
+      variants={sectionReveal}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
@@ -86,7 +84,7 @@ function CategoryBlock({ category, categoryIndex }) {
           <motion.span
             key={item}
             custom={idx}
-            variants={shouldReduce ? {} : pillReveal}
+            variants={pillReveal}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
