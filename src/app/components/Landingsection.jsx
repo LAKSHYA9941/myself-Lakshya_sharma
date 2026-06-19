@@ -74,31 +74,21 @@ export default function LandingSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-screen items-center overflow-hidden"
-      style={{ paddingTop: "var(--nav-height)" }}
+      className="relative flex min-h-screen items-center overflow-hidden pt-[var(--spacing-nav)]"
     >
       {/* Grid overlay */}
       <div className="grid-overlay" />
 
       <motion.div
-        className="relative z-10 mx-auto w-full px-6"
+        className="relative z-10 mx-auto w-full max-w-[1200px] px-6"
         style={{
-          maxWidth: "var(--container-max)",
           y: shouldReduceMotion ? 0 : heroY,
           opacity: shouldReduceMotion ? 1 : heroOpacity,
         }}
       >
         {/* Heading */}
-        <div className="mb-8" style={{ borderLeft: "2px solid var(--accent)", paddingLeft: "1.5rem" }}>
-          <h1
-            className="font-extrabold"
-            style={{
-              fontSize: "clamp(48px, 8vw, 96px)",
-              lineHeight: 1.05,
-              letterSpacing: "var(--letter-tight)",
-              color: "var(--text-highlight)",
-            }}
-          >
+        <div className="mb-8 border-l-2 border-accent pl-6">
+          <h1 className="font-extrabold text-[clamp(48px,8vw,96px)] leading-[1.05] tracking-tight text-highlight">
             <span className="flex flex-wrap gap-x-[0.3em]">
               {WORDS_LINE_1.map((word, i) => (
                 <motion.span
@@ -136,12 +126,7 @@ export default function LandingSection() {
           initial="hidden"
           animate="visible"
           variants={fadeIn}
-          className="mb-2 text-sm md:text-base"
-          style={{
-            color: "var(--text-muted)",
-            fontFamily: "var(--font-mono)",
-            letterSpacing: "0.02em",
-          }}
+          className="mb-2 text-sm md:text-base font-mono tracking-[0.02em] text-muted"
         >
           React Native &middot; Node.js &middot; AI/RAG &middot; TypeScript &middot; PostgreSQL
         </motion.p>
@@ -151,10 +136,9 @@ export default function LandingSection() {
           initial="hidden"
           animate="visible"
           variants={fadeIn}
-          className="mb-10 text-sm md:text-base"
-          style={{ color: "var(--text-muted)" }}
+          className="mb-10 text-sm md:text-base text-muted"
         >
-          Currently: <span style={{ color: "var(--text-primary)" }}>At Facility</span> — outstation cab booking app, MVP live
+          Currently: <span className="text-primary">At Facility</span> — outstation cab booking app, MVP live
         </motion.p>
 
         {/* CTAs */}

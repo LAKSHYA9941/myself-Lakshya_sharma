@@ -22,7 +22,7 @@ export default function About() {
   const shouldReduce = useReducedMotion();
 
   return (
-    <div className="w-full px-6" style={{ maxWidth: "var(--container-max)", margin: "0 auto" }}>
+    <div className="w-full max-w-[1200px] mx-auto px-6">
       {/* Section Label */}
       <p className="section-label">// 01 About</p>
 
@@ -33,29 +33,17 @@ export default function About() {
         viewport={{ once: true, amount: 0.3 }}
         className="glass-card p-8 md:p-12 lg:p-16"
       >
-        <div className="space-y-6" style={{ maxWidth: "720px" }}>
+        <div className="space-y-6 max-w-[720px]">
           {paragraphs.map((text, i) => (
             <p
               key={i}
-              className="text-base md:text-lg"
-              style={{
-                color: "var(--text-primary)",
-                lineHeight: "var(--line-height-body)",
-              }}
+              className="text-base md:text-lg text-primary leading-relaxed"
             >
               {text}
             </p>
           ))}
 
-          <p
-            className="text-sm pt-4"
-            style={{
-              color: "var(--text-muted)",
-              fontFamily: "var(--font-mono)",
-              borderTop: "1px solid var(--border)",
-              paddingTop: "1.5rem",
-            }}
-          >
+          <p className="text-sm font-mono text-muted pt-6 mt-6 border-t border-glass-border">
             {education}
           </p>
         </div>

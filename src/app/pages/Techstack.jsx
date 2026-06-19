@@ -76,10 +76,7 @@ function CategoryBlock({ category, categoryIndex }) {
       viewport={{ once: true, amount: 0.3 }}
     >
       {/* Category title */}
-      <h3
-        className="mb-5 text-lg font-semibold"
-        style={{ color: "var(--text-primary)" }}
-      >
+      <h3 className="mb-5 text-lg font-semibold text-primary">
         {category.title}
       </h3>
 
@@ -106,10 +103,7 @@ function CategoryBlock({ category, categoryIndex }) {
 /* ---------- main ---------- */
 export default function Techstack() {
   return (
-    <div
-      className="w-full px-6"
-      style={{ maxWidth: "var(--container-max)", margin: "0 auto" }}
-    >
+    <div className="w-full max-w-[1200px] mx-auto px-6">
       {/* Section Label */}
       <p className="section-label">// 03 Stack</p>
 
@@ -119,7 +113,7 @@ export default function Techstack() {
             <div key={cat.title}>
               <CategoryBlock category={cat} categoryIndex={idx} />
               {idx < categories.length - 1 && (
-                <hr className="section-divider mt-10" />
+                <hr className="section-divider mt-10 border-t border-glass-border border-l-0 border-r-0 border-b-0" />
               )}
             </div>
           ))}

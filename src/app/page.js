@@ -13,32 +13,27 @@ export default function Page() {
   return (
     <>
       <CursorGlow />
-      <main
-        className="relative"
-        style={{ backgroundColor: "var(--bg)", minHeight: "100vh" }}
-      >
+      <main className="relative min-h-screen bg-base-bg">
         <Navbar />
         <LandingPage />
 
         <section
           id="about"
-          className="flex items-center"
-          style={{ paddingTop: "var(--section-gap)", paddingBottom: "var(--section-gap)" }}
+          className="flex items-center py-[var(--spacing-section)]"
         >
           <About />
         </section>
 
         <section
           id="projects"
-          style={{ paddingTop: "var(--section-gap)", paddingBottom: "var(--section-gap)" }}
+          className="py-[var(--spacing-section)]"
         >
           <Projects />
         </section>
 
         <section
           id="techstack"
-          className="flex items-center"
-          style={{ paddingTop: "var(--section-gap)", paddingBottom: "var(--section-gap)" }}
+          className="flex items-center py-[var(--spacing-section)]"
         >
           <Techstack />
         </section>

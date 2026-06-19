@@ -57,12 +57,7 @@ export default function Contacts() {
   return (
     <footer
       id="contact"
-      className="w-full px-6 pb-12"
-      style={{
-        maxWidth: "var(--container-max)",
-        margin: "0 auto",
-        paddingTop: "var(--section-gap)",
-      }}
+      className="w-full max-w-[1200px] mx-auto px-6 pb-12 pt-[var(--spacing-section)]"
     >
       {/* Section Label */}
       <p className="section-label">// 04 Contact</p>
@@ -73,17 +68,12 @@ export default function Contacts() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="mb-10 text-base md:text-lg"
-        style={{
-          color: "var(--text-primary)",
-          maxWidth: "600px",
-          lineHeight: "var(--line-height-body)",
-        }}
+        className="mb-10 text-base md:text-lg text-primary max-w-[600px] leading-relaxed"
       >
         Open to full-stack, React Native, and AI developer roles — remote or
         Delhi NCR.
         <br />
-        <span style={{ color: "var(--text-muted)" }}>
+        <span className="text-muted">
           Response within 24 hours.
         </span>
       </motion.p>
@@ -100,29 +90,14 @@ export default function Contacts() {
           const Icon = item.icon;
           const inner = (
             <div className="glass-card flex items-center gap-4 p-5 transition-all duration-200 cursor-default">
-              <div
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-200"
-                style={{
-                  background: "var(--surface-hover)",
-                  color: "var(--text-primary)",
-                }}
-              >
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-200 bg-surface-hover text-primary">
                 <Icon size={18} />
               </div>
               <div className="min-w-0">
-                <p
-                  className="text-xs uppercase tracking-wider mb-0.5"
-                  style={{
-                    color: "var(--text-muted)",
-                    fontFamily: "var(--font-mono)",
-                  }}
-                >
+                <p className="text-xs uppercase tracking-wider mb-0.5 text-muted font-mono">
                   {item.label}
                 </p>
-                <p
-                  className="text-sm font-medium truncate"
-                  style={{ color: "var(--text-primary)" }}
-                >
+                <p className="text-sm font-medium truncate text-primary">
                   {item.value}
                 </p>
               </div>
@@ -160,12 +135,7 @@ export default function Contacts() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={s.label}
-              className="flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 hover:opacity-80"
-              style={{
-                background: "var(--surface)",
-                border: "1px solid var(--border)",
-                color: "var(--text-primary)",
-              }}
+              className="flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 hover:opacity-80 bg-surface border border-glass-border text-primary"
             >
               <Icon size={18} />
             </a>
@@ -174,14 +144,8 @@ export default function Contacts() {
       </motion.div>
 
       {/* Footer Line */}
-      <hr className="section-divider mb-6" />
-      <p
-        className="text-xs"
-        style={{
-          color: "var(--text-muted)",
-          fontFamily: "var(--font-mono)",
-        }}
-      >
+      <hr className="section-divider mb-6 border-t border-glass-border border-l-0 border-r-0 border-b-0" />
+      <p className="text-xs text-muted font-mono">
         {new Date().getFullYear()} Lakshya Sharma
       </p>
     </footer>

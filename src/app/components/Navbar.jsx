@@ -82,28 +82,14 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "border-b"
-          : ""
+          ? "bg-base-bg/75 backdrop-blur-[20px] backdrop-saturate-[180%] border-b border-glass-border"
+          : "bg-transparent border-transparent"
       }`}
-      style={{
-        backgroundColor: scrolled ? "rgba(10,10,10,0.75)" : "transparent",
-        backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-        borderColor: scrolled ? "var(--border)" : "transparent",
-      }}
     >
-      <nav className="mx-auto flex h-16 max-w-[var(--container-max)] items-center justify-between px-6">
+      <nav className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-6">
         {/* Logo */}
         <Link href="/" className="relative z-10">
-          <span
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-sm font-semibold tracking-wider transition-all duration-200 hover:shadow-[0_0_12px_var(--accent-glow)]"
-            style={{
-              fontFamily: "var(--font-mono)",
-              color: "var(--text-primary)",
-              border: "1px solid var(--border)",
-              background: "var(--surface)",
-            }}
-          >
+          <span className="flex h-10 w-10 items-center justify-center rounded-lg font-mono text-sm font-semibold tracking-wider text-primary bg-surface border border-glass-border transition-all duration-200 hover:shadow-[0_0_12px_var(--color-accent-glow)]">
             LS
           </span>
         </Link>
@@ -117,20 +103,15 @@ export default function Navbar() {
                 <Link
                   href={`/#${path}`}
                   onClick={(e) => handleClick(e, path)}
-                  className="relative px-4 py-2 text-[13px] font-medium tracking-wide uppercase transition-colors duration-200"
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    color: isActive
-                      ? "var(--text-primary)"
-                      : "var(--text-muted)",
-                  }}
+                  className={`relative px-4 py-2 font-mono text-[13px] font-medium tracking-wide uppercase transition-colors duration-200 ${
+                    isActive ? "text-primary" : "text-muted"
+                  }`}
                 >
                   {label}
                   {isActive && (
                     <motion.span
                       layoutId="nav-underline"
-                      className="absolute bottom-0 left-2 right-2 h-px"
-                      style={{ background: "var(--accent)" }}
+                      className="absolute bottom-0 left-2 right-2 h-px bg-accent"
                       transition={{
                         type: "spring",
                         stiffness: 380,
@@ -147,38 +128,24 @@ export default function Navbar() {
         {/* Mobile Hamburger */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="relative z-10 flex md:hidden h-10 w-10 items-center justify-center rounded-lg transition-colors"
-          style={{
-            border: "1px solid var(--border)",
-            background: "var(--surface)",
-          }}
+          className="relative z-10 flex md:hidden h-10 w-10 items-center justify-center rounded-lg bg-surface border border-glass-border transition-colors"
           aria-label="Toggle menu"
         >
           <div className="flex flex-col gap-[5px]">
             <span
-              className="block h-px w-5 transition-all duration-200"
-              style={{
-                background: "var(--text-primary)",
-                transform: mobileOpen
-                  ? "rotate(45deg) translate(2px, 2px)"
-                  : "none",
-              }}
+              className={`block h-px w-5 bg-primary transition-all duration-200 ${
+                mobileOpen ? "rotate-45 translate-y-[2px] translate-x-[2px]" : ""
+              }`}
             />
             <span
-              className="block h-px w-5 transition-all duration-200"
-              style={{
-                background: "var(--text-primary)",
-                opacity: mobileOpen ? 0 : 1,
-              }}
+              className={`block h-px w-5 bg-primary transition-all duration-200 ${
+                mobileOpen ? "opacity-0" : "opacity-100"
+              }`}
             />
             <span
-              className="block h-px w-5 transition-all duration-200"
-              style={{
-                background: "var(--text-primary)",
-                transform: mobileOpen
-                  ? "rotate(-45deg) translate(2px, -2px)"
-                  : "none",
-              }}
+              className={`block h-px w-5 bg-primary transition-all duration-200 ${
+                mobileOpen ? "-rotate-45 -translate-y-[2px] translate-x-[2px]" : ""
+              }`}
             />
           </div>
         </button>
@@ -192,25 +159,16 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="glass-card fixed inset-x-0 top-16 bottom-0 z-40 flex flex-col items-center justify-center gap-8 md:hidden"
-            style={{
-              background: "rgba(10, 10, 10, 0.95)",
-              backdropFilter: "blur(30px) saturate(180%)",
-            }}
+            className="fixed inset-x-0 top-16 bottom-0 z-40 flex flex-col items-center justify-center gap-8 md:hidden bg-base-bg/95 backdrop-blur-[30px] backdrop-saturate-[180%] border-t border-glass-border"
           >
             {links.map(({ path, label }) => (
               <Link
                 key={path}
                 href={`/#${path}`}
                 onClick={(e) => handleClick(e, path)}
-                className="text-2xl font-medium tracking-wide uppercase transition-colors duration-200"
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  color:
-                    active === path
-                      ? "var(--accent)"
-                      : "var(--text-primary)",
-                }}
+                className={`text-2xl font-mono font-medium tracking-wide uppercase transition-colors duration-200 ${
+                  active === path ? "text-accent" : "text-primary"
+                }`}
               >
                 {label}
               </Link>

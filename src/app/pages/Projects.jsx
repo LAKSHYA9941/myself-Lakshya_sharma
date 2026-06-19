@@ -123,33 +123,21 @@ function FeaturedCard({ project }) {
           <span className="pulse-dot" />
           {project.status}
         </span>
-        <span
-          className="text-xs font-medium uppercase tracking-wider"
-          style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}
-        >
+        <span className="text-xs font-mono font-medium uppercase tracking-wider text-muted">
           Featured
         </span>
       </div>
 
       {/* Title */}
-      <h3
-        className="mb-2 text-3xl md:text-4xl font-bold"
-        style={{ color: "var(--text-highlight)", letterSpacing: "var(--letter-tight)" }}
-      >
+      <h3 className="mb-2 text-3xl md:text-4xl font-bold tracking-tight text-highlight">
         {project.name}
       </h3>
-      <p
-        className="mb-6 text-lg font-medium"
-        style={{ color: "var(--text-muted)" }}
-      >
+      <p className="mb-6 text-lg font-medium text-muted">
         {project.tagline}
       </p>
 
       {/* Description */}
-      <p
-        className="mb-8 text-base md:text-lg leading-relaxed"
-        style={{ color: "var(--text-primary)", maxWidth: "680px", lineHeight: "var(--line-height-body)" }}
-      >
+      <p className="mb-8 text-base md:text-lg leading-relaxed text-primary max-w-[680px]">
         {project.description}
       </p>
 
@@ -170,8 +158,7 @@ function FeaturedCard({ project }) {
             href={project.repo}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
-            style={{ color: "var(--text-muted)" }}
+            className="inline-flex items-center gap-1.5 text-sm font-medium transition-colors text-muted hover:text-primary"
           >
             <FiGithub size={16} />
             Source
@@ -196,16 +183,16 @@ function ProjectCard({ project, index }) {
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
       transition={{ delay: index * 0.05 }}
-      className="glass-card flex flex-col overflow-hidden"
+      className="glass-card flex flex-col overflow-hidden group"
     >
       {/* Image */}
-      <div className="relative aspect-video overflow-hidden">
+      <div className="relative aspect-video overflow-hidden border-b border-glass-border">
         <Image
           src={project.image}
           alt={project.name}
           fill
           sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-cover transition-transform duration-300 hover:scale-[1.03]"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
       </div>
@@ -214,20 +201,14 @@ function ProjectCard({ project, index }) {
       <div className="flex flex-1 flex-col p-6">
         {/* Title + WIP */}
         <div className="mb-3 flex items-center gap-3">
-          <h3
-            className="text-lg font-semibold"
-            style={{ color: "var(--text-highlight)" }}
-          >
+          <h3 className="text-lg font-semibold text-highlight">
             {project.name}
           </h3>
           {project.wip && <span className="status-badge wip">WIP</span>}
         </div>
 
         {/* Description */}
-        <p
-          className="mb-4 flex-1 text-sm leading-relaxed"
-          style={{ color: "var(--text-muted)" }}
-        >
+        <p className="mb-4 flex-1 text-sm leading-relaxed text-muted">
           {project.description}
         </p>
 
@@ -236,11 +217,7 @@ function ProjectCard({ project, index }) {
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="text-xs px-2 py-0.5 rounded-full"
-              style={{
-                color: "var(--text-muted)",
-                border: "1px solid var(--border)",
-              }}
+              className="text-[11px] px-2 py-0.5 rounded-full text-muted border border-glass-border"
             >
               {tag}
             </span>
@@ -254,8 +231,7 @@ function ProjectCard({ project, index }) {
               href={project.live}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-medium transition-colors hover:opacity-80"
-              style={{ color: "var(--text-primary)" }}
+              className="inline-flex items-center gap-1.5 text-sm font-medium transition-colors text-primary hover:opacity-80"
             >
               <FiExternalLink size={14} />
               Live
@@ -266,8 +242,7 @@ function ProjectCard({ project, index }) {
               href={project.repo}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-medium transition-colors hover:opacity-80"
-              style={{ color: "var(--text-muted)" }}
+              className="inline-flex items-center gap-1.5 text-sm font-medium transition-colors text-muted hover:text-primary hover:opacity-80"
             >
               <FiGithub size={14} />
               Source
@@ -285,10 +260,7 @@ function ProjectCard({ project, index }) {
 
 export default function Projects() {
   return (
-    <div
-      className="w-full px-6"
-      style={{ maxWidth: "var(--container-max)", margin: "0 auto" }}
-    >
+    <div className="w-full max-w-[1200px] mx-auto px-6">
       {/* Section Label */}
       <p className="section-label">// 02 Projects</p>
 
