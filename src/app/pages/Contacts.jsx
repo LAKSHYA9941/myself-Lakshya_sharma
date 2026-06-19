@@ -1,121 +1,189 @@
 "use client";
-import React from "react";
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter } from "lucide-react";
-import { motion } from "framer-motion";
-import Button from "../components/Socials";
+import { motion, useReducedMotion } from "framer-motion";
+import { Mail, Phone, MapPin } from "lucide-react";
+import { FiGithub, FiLinkedin } from "react-icons/fi";
+
+const contactInfo = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: "lakshyasharma.9.0.1.2@gmail.com",
+    href: "mailto:lakshyasharma.9.0.1.2@gmail.com",
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: "+91 88267 73747",
+    href: "tel:+918826773747",
+  },
+  {
+    icon: MapPin,
+    label: "Location",
+    value: "Delhi, India",
+    href: null,
+  },
+];
+
+const socials = [
+  {
+    icon: FiGithub,
+    label: "GitHub",
+    href: "https://github.com/LAKSHYA9941",
+  },
+  {
+    icon: FiLinkedin,
+    label: "LinkedIn",
+    href: "https://linkedin.com/in/lakshya-sharma-35817926a",
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    href: "mailto:lakshyasharma.9.0.1.2@gmail.com",
+  },
+];
+
+const cardReveal = {
+  hidden: { opacity: 0, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+};
 
 export default function Contacts() {
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: "lakshyasharma.9.0.1.2.3@gmail.com",
-      href: "mailto:lakshyasharma.9.0.1.2.3@gmail.com",
-      color: "text-cyan-400"
-    },
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "+91 8826773747",
-      href: "tel:+918826773747",
-      color: "text-emerald-400"
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: "New Delhi, India",
-      href: null,
-      color: "text-purple-400"
-    }
-  ];
+  const shouldReduce = useReducedMotion();
 
   return (
     <footer
       id="contact"
-      className="relative py-12 px-6 border-t border-white/10 bg-black/40 backdrop-blur-md"
+      className="w-full px-6 pb-12"
+      style={{
+        maxWidth: "var(--container-max)",
+        margin: "0 auto",
+        paddingTop: "var(--section-gap)",
+      }}
     >
-      {/* Subtle background glow */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-cyan-500/5 rounded-full blur-[120px]" />
-      </div>
+      {/* Section Label */}
+      <p className="section-label">// 04 Contact</p>
 
-      <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-8"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-emerald-400 to-purple-400 bg-clip-text text-transparent mb-2">
-            Let's Connect
-          </h2>
-          <p className="text-white/60 text-sm md:text-base max-w-2xl mx-auto">
-            Open to new opportunities, collaborations, and interesting conversations
-          </p>
-        </motion.div>
+      {/* Availability */}
+      <motion.p
+        variants={shouldReduce ? {} : cardReveal}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="mb-10 text-base md:text-lg"
+        style={{
+          color: "var(--text-primary)",
+          maxWidth: "600px",
+          lineHeight: "var(--line-height-body)",
+        }}
+      >
+        Open to full-stack, React Native, and AI developer roles — remote or
+        Delhi NCR.
+        <br />
+        <span style={{ color: "var(--text-muted)" }}>
+          Response within 24 hours.
+        </span>
+      </motion.p>
 
-        {/* Contact Info Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
-        >
-          {contactInfo.map((item, index) => {
-            const Icon = item.icon;
-            const content = (
-              <div className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all duration-300 group">
-                <div className={`flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 ${item.color} group-hover:scale-110 transition-transform duration-300`}>
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs text-white/50 uppercase tracking-wider">{item.label}</p>
-                  <p className="text-sm md:text-base font-medium text-white truncate">{item.value}</p>
-                </div>
-              </div>
-            );
-
-            return item.href ? (
-              <a
-                key={index}
-                href={item.href}
-                className="block transform hover:scale-[1.02] transition-transform duration-300"
+      {/* Contact Cards */}
+      <motion.div
+        variants={shouldReduce ? {} : cardReveal}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10"
+      >
+        {contactInfo.map((item) => {
+          const Icon = item.icon;
+          const inner = (
+            <div className="glass-card flex items-center gap-4 p-5 transition-all duration-200 cursor-default">
+              <div
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-200"
+                style={{
+                  background: "var(--surface-hover)",
+                  color: "var(--text-primary)",
+                }}
               >
-                {content}
-              </a>
-            ) : (
-              <div key={index}>{content}</div>
-            );
-          })}
-        </motion.div>
+                <Icon size={18} />
+              </div>
+              <div className="min-w-0">
+                <p
+                  className="text-xs uppercase tracking-wider mb-0.5"
+                  style={{
+                    color: "var(--text-muted)",
+                    fontFamily: "var(--font-mono)",
+                  }}
+                >
+                  {item.label}
+                </p>
+                <p
+                  className="text-sm font-medium truncate"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  {item.value}
+                </p>
+              </div>
+            </div>
+          );
 
-        {/* Social Links */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex justify-center mb-6"
-        >
-          <Button />
-        </motion.div>
+          return item.href ? (
+            <a
+              key={item.label}
+              href={item.href}
+              className="block hover:opacity-90 transition-opacity"
+            >
+              {inner}
+            </a>
+          ) : (
+            <div key={item.label}>{inner}</div>
+          );
+        })}
+      </motion.div>
 
-        {/* Footer Bottom */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="pt-6 border-t border-white/5 text-center"
-        >
-          <p className="text-white/40 text-sm">
-            © {new Date().getFullYear()} Lakshya Sharma. Built with passion and lots of coffee ☕
-          </p>
-        </motion.div>
-      </div>
+      {/* Social Links */}
+      <motion.div
+        variants={shouldReduce ? {} : cardReveal}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="flex items-center gap-3 mb-12"
+      >
+        {socials.map((s) => {
+          const Icon = s.icon;
+          return (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              className="flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 hover:opacity-80"
+              style={{
+                background: "var(--surface)",
+                border: "1px solid var(--border)",
+                color: "var(--text-primary)",
+              }}
+            >
+              <Icon size={18} />
+            </a>
+          );
+        })}
+      </motion.div>
+
+      {/* Footer Line */}
+      <hr className="section-divider mb-6" />
+      <p
+        className="text-xs"
+        style={{
+          color: "var(--text-muted)",
+          fontFamily: "var(--font-mono)",
+        }}
+      >
+        {new Date().getFullYear()} Lakshya Sharma
+      </p>
     </footer>
   );
 }

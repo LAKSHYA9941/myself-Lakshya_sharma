@@ -1,201 +1,185 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { gsap } from "gsap";
-import HoverEffect from "./Hoverit";
-import { motion } from "framer-motion";
+import { useRef, useCallback } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+
+const WORDS_LINE_1 = ["I", "build", "full-stack", "products"];
+const WORDS_LINE_2 = ["that", "ship."];
+
+const wordAnimation = {
+  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.35,
+      delay: i * 0.08,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  }),
+};
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (delay) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.3, delay, ease: "easeOut" },
+  }),
+};
 
 export default function LandingSection() {
   const sectionRef = useRef(null);
-  const [mouseTilt, setMouseTilt] = useState({ x: 0, y: 0 });
+  const shouldReduceMotion = useReducedMotion();
 
-  const lines = [
-    "I'm a full-stack AI developer",
-    "Still thinking what to add in my skill arsenal",
-    "Writing code that’s 90% elegance, 10% duct tape, and 100% ‘don’t touch that part'"
-  ];
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
 
-  function highlightWords(text) {
-    return text.split(/(\s+)/).map((word, idx) => {
-      const w = word.toLowerCase();
-      if (w === "full-stack" || w === "developer")
-        return (
-          <HoverEffect key={idx} color1="#93c5fd" color2="#f87171" src="/developer.gif">
-            {word}
-          </HoverEffect>
-        );
-      if (w === "arsenal")
-        return (
-          <HoverEffect key={idx} color1="#86efac" color2="#eab308" src="/arsenal.gif">
-            {word}
-          </HoverEffect>
-        );
-      if (w.includes("don’t") || w.includes("don't"))
-        return (
-          <HoverEffect key={idx} color1="#facc15" color2="#fb923c" src="/dont.gif">
-            {word}
-          </HoverEffect>
-        );
-      return word;
-    });
-  }
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const offsetX = e.clientX - rect.left - rect.width / 2;
-    const offsetY = e.clientY - rect.top - rect.height / 2;
-    setMouseTilt({ x: offsetX / 25, y: offsetY / 25 });
-  };
-
-  const handleMouseLeave = () => setMouseTilt({ x: 0, y: 0 });
-
-  const handleDownload = async () => {
+  const handleDownload = useCallback(async () => {
     const filePath = "/Lakshya _CV2.pdf";
-    const ok =
-      typeof window !== "undefined" && window.confirm("Download resume to your device?");
-    if (!ok) return;
-
     try {
       const res = await fetch(filePath, { method: "HEAD" });
       if (!res.ok) throw new Error("Missing file");
-
       const a = document.createElement("a");
       a.href = filePath;
-      a.download = filePath.split("/").pop() || "resume.pdf";
+      a.download = "Lakshya_Sharma_Resume.pdf";
       document.body.appendChild(a);
       a.click();
       a.remove();
-    } catch (err) {
-      alert("Resume file not found yet. Please try again later.");
+    } catch {
+      alert("Resume file not found. Please try again later.");
     }
-  };
-
-  // ✨ Blur-to-clear GSAP animation
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".fade-blur",
-        { opacity: 0, filter: "blur(20px)", y: 30, willChange: "opacity, filter, transform" },
-        {
-          opacity: 1,
-          filter: "blur(0px)",
-          y: 0,
-          duration: 0.9,
-          stagger: 0.15,
-          ease: "power3.out",
-          clearProps: "willChange",
-          force3D: true
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
   }, []);
+
+  const scrollToProjects = useCallback((e) => {
+    e.preventDefault();
+    const target = document.getElementById("projects");
+    if (!target) return;
+    if (window.lenis?.scrollTo) {
+      window.lenis.scrollTo(target, { offset: -64 });
+    } else {
+      const y = target.getBoundingClientRect().top + window.scrollY - 64;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  }, []);
+
+  const totalWordCount = WORDS_LINE_1.length + WORDS_LINE_2.length;
+  const subDelay = totalWordCount * 0.08 + 0.2;
 
   return (
     <section
       ref={sectionRef}
-      className="min-h-[90vh] flex items-center justify-center overflow-hidden"
+      className="relative flex min-h-screen items-center overflow-hidden"
+      style={{ paddingTop: "var(--nav-height)" }}
     >
-      <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12 px-4 
-        [grid-template-areas:'text''image''buttons'] 
-        md:[grid-template-areas:'text_image''buttons_image']"
+      {/* Grid overlay */}
+      <div className="grid-overlay" />
+
+      <motion.div
+        className="relative z-10 mx-auto w-full px-6"
+        style={{
+          maxWidth: "var(--container-max)",
+          y: shouldReduceMotion ? 0 : heroY,
+          opacity: shouldReduceMotion ? 1 : heroOpacity,
+        }}
       >
-        
-        {/* Text Block */}
-        <div className="space-y-6 text-center md:text-left z-10 fade-blur [grid-area:text]">
-          <h1 className="text-4xl sm:text-6xl md:text-6xl font-bold text-white leading-tight">
-            Hi, I'm{" "}
-            <span className="text-transparent bg-clip-text bg-slate-50 drop-shadow-[0_0_8px_#fff]">
-              Lakshya
-            </span>{" "}
-          </h1>
-
-          <div className="text-sm sm:text-base md:text-xl text-zinc-50 space-y-1">
-            {lines.map((line, i) => (
-              <p key={i} className="fade-blur leading-relaxed">
-                {highlightWords(line)}
-              </p>
-            ))}
-          </div>
-        </div>
-
-        {/* Image Block */}
-        <div className="flex-shrink-0 flex justify-center fade-blur mt-6 md:mt-0 [grid-area:image]">
-          <motion.div
-            className="relative group"
+        {/* Heading */}
+        <div className="mb-8" style={{ borderLeft: "2px solid var(--accent)", paddingLeft: "1.5rem" }}>
+          <h1
+            className="font-extrabold"
             style={{
-              transform: `perspective(1000px) rotateY(${mouseTilt.x}deg) rotateX(${-mouseTilt.y}deg)`,
-              transition: "transform 0.15s ease-out"
+              fontSize: "clamp(48px, 8vw, 96px)",
+              lineHeight: 1.05,
+              letterSpacing: "var(--letter-tight)",
+              color: "var(--text-highlight)",
             }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
           >
-            <div className="absolute -inset-6 bg-gradient-to-br from-cyan-500/15 via-purple-500/15 to-sky-500/15 blur-3xl opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
-            <div className="relative w-[220px] sm:w-[260px] md:w-[320px] lg:w-[360px] aspect-[3/4] rounded-[2.5rem] border border-white/15 bg-white/5 backdrop-blur-md overflow-hidden shadow-[0_35px_60px_-25px_rgba(15,23,42,0.75)]">
-              <Image
-                src="/mine2.jpeg"
-                alt="Lakshya"
-                fill
-                priority
-                loading="eager"
-                fetchPriority="high"
-                sizes="(min-width: 1024px) 360px, (min-width: 768px) 320px, 220px"
-                className="object-cover object-top"
-                quality={90}
-              />
-            </div>
-            <motion.div
-              className="absolute -top-8 -right-6 h-20 w-20 rounded-full bg-cyan-400/35 blur-xl"
-              animate={{ y: [0, -15, 0], scale: [1, 1.15, 1] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.div
-              className="absolute -bottom-10 -left-8 h-24 w-24 rounded-full bg-purple-500/30 blur-2xl"
-              animate={{ y: [0, 18, 0], scale: [1, 1.1, 1] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-            />
-          </motion.div>
+            <span className="flex flex-wrap gap-x-[0.3em]">
+              {WORDS_LINE_1.map((word, i) => (
+                <motion.span
+                  key={word}
+                  custom={i}
+                  initial="hidden"
+                  animate="visible"
+                  variants={wordAnimation}
+                  className="inline-block"
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </span>
+            <span className="flex flex-wrap gap-x-[0.3em]">
+              {WORDS_LINE_2.map((word, i) => (
+                <motion.span
+                  key={word}
+                  custom={i + WORDS_LINE_1.length}
+                  initial="hidden"
+                  animate="visible"
+                  variants={wordAnimation}
+                  className="inline-block"
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </span>
+          </h1>
         </div>
 
-        {/* Buttons Block */}
-        <div className="flex flex-row flex-wrap justify-center md:justify-start gap-3 pt-4 fade-blur [grid-area:buttons] md:-mt-10 self-start">
-          <Link href="/#contact">
-            <motion.span
-              whileTap={{ scale: 0.95 }}
-              className="gradient-wrapper fire inline-block"
-            >
-              <button className="gradient-btn px-4 sm:px-5 py-2 text-xs sm:text-sm rounded-md">
-                Contact Me
-              </button>
-            </motion.span>
-          </Link>
+        {/* Subheading */}
+        <motion.p
+          custom={subDelay}
+          initial="hidden"
+          animate="visible"
+          variants={fadeIn}
+          className="mb-2 text-sm md:text-base"
+          style={{
+            color: "var(--text-muted)",
+            fontFamily: "var(--font-mono)",
+            letterSpacing: "0.02em",
+          }}
+        >
+          React Native &middot; Node.js &middot; AI/RAG &middot; TypeScript &middot; PostgreSQL
+        </motion.p>
 
-          <Link href="/#projects">
-            <motion.span
-              whileTap={{ scale: 0.95 }}
-              className="gradient-wrapper sky inline-block"
-            >
-              <button className="gradient-btn px-4 sm:px-5 py-2 text-xs sm:text-sm rounded-md">
-                Explore Projects
-              </button>
-            </motion.span>
-          </Link>
+        <motion.p
+          custom={subDelay + 0.1}
+          initial="hidden"
+          animate="visible"
+          variants={fadeIn}
+          className="mb-10 text-sm md:text-base"
+          style={{ color: "var(--text-muted)" }}
+        >
+          Currently: <span style={{ color: "var(--text-primary)" }}>At Facility</span> — outstation cab booking app, MVP live
+        </motion.p>
 
-          <motion.span
-            whileTap={{ scale: 0.95 }}
-            className="gradient-wrapper cyan inline-block"
-          >
-            <button
-              onClick={handleDownload}
-              className="gradient-btn px-4 sm:px-5 py-2 text-xs sm:text-sm rounded-md"
-            >
-              Download Resume
+        {/* CTAs */}
+        <motion.div
+          custom={subDelay + 0.2}
+          initial="hidden"
+          animate="visible"
+          variants={fadeIn}
+          className="flex flex-wrap gap-4"
+        >
+          <a href="/#projects" onClick={scrollToProjects}>
+            <button className="btn-primary" id="hero-view-projects">
+              View Projects
             </button>
-          </motion.span>
-        </div>
-      </div>
+          </a>
+
+          <button
+            className="btn-ghost"
+            onClick={handleDownload}
+            id="hero-download-resume"
+          >
+            Download Resume
+          </button>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
