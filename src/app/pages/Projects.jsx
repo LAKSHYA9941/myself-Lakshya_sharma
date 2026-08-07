@@ -23,6 +23,7 @@ const featuredProject = {
   status: "MVP Live",
   live: null,
   repo: null,
+  image: "/atflogo.jpeg",
 };
 
 const projects = [
@@ -113,56 +114,69 @@ function FeaturedCard({ project }) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="glass-card neon-shadow relative overflow-hidden p-8 md:p-12"
+      className="glass-card neon-shadow relative overflow-hidden flex flex-col md:flex-row"
     >
-      {/* Top row: status + type */}
-      <div className="mb-6 flex flex-wrap items-center gap-3">
-        <span className="status-badge live">
-          <span className="pulse-dot" />
-          {project.status}
-        </span>
-        <span className="text-xs font-mono font-medium uppercase tracking-wider text-muted">
-          Featured
-        </span>
-      </div>
-
-      {/* Title */}
-      <h3 className="mb-2 text-3xl md:text-4xl font-bold tracking-tight text-highlight">
-        {project.name}
-      </h3>
-      <p className="mb-6 text-lg font-medium text-muted">
-        {project.tagline}
-      </p>
-
-      {/* Description */}
-      <p className="mb-8 text-base md:text-lg leading-relaxed text-primary max-w-[680px]">
-        {project.description}
-      </p>
-
-      {/* Tags */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        {project.tags.map((tag) => (
-          <span key={tag} className="tech-pill">
-            {tag}
+      <div className="p-8 md:p-12 flex-1">
+        {/* Top row: status + type */}
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <span className="status-badge live">
+            <span className="pulse-dot" />
+            {project.status}
           </span>
-        ))}
+          <span className="text-xs font-mono font-medium uppercase tracking-wider text-muted">
+            Featured
+          </span>
+        </div>
+
+        {/* Title */}
+        <h3 className="mb-2 text-3xl md:text-4xl font-bold tracking-tight text-highlight">
+          {project.name}
+        </h3>
+        <p className="mb-6 text-lg font-medium text-muted">
+          {project.tagline}
+        </p>
+
+        {/* Description */}
+        <p className="mb-8 text-base md:text-lg leading-relaxed text-primary max-w-[680px]">
+          {project.description}
+        </p>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {project.tags.map((tag) => (
+            <span key={tag} className="tech-pill">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        {/* Actions */}
+        <div className="flex items-center gap-4">
+          <span className="status-badge wip">In Progress</span>
+          {project.repo && (
+            <a
+              href={project.repo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-medium transition-colors text-muted hover:text-primary"
+            >
+              <FiGithub size={16} />
+              Source
+            </a>
+          )}
+        </div>
       </div>
 
-      {/* Actions */}
-      <div className="flex items-center gap-4">
-        <span className="status-badge wip">In Progress</span>
-        {project.repo && (
-          <a
-            href={project.repo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-medium transition-colors text-muted hover:text-primary"
-          >
-            <FiGithub size={16} />
-            Source
-          </a>
-        )}
-      </div>
+      {project.image && (
+        <div className="relative h-64 md:h-auto md:w-1/3 lg:w-2/5 border-t md:border-t-0 md:border-l border-glass-border">
+          <Image
+            src={project.image}
+            alt={project.name}
+            fill
+            className="object-cover"
+          />
+        </div>
+      )}
     </motion.div>
   );
 }
