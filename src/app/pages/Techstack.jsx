@@ -1,5 +1,7 @@
 "use client";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
 
 /* ---------- data ---------- */
 const categories = [
@@ -88,7 +90,7 @@ function CategoryBlock({ category, categoryIndex }) {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="tech-pill"
+            className="tech-pill cursor-pointer select-none"
           >
             {item}
           </motion.span>
@@ -100,8 +102,61 @@ function CategoryBlock({ category, categoryIndex }) {
 
 /* ---------- main ---------- */
 export default function Techstack() {
+  const stageRef = useRef(null);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    const radius = 180;
+    const maxScale = 1.35;
+    const dur = 0.35;
+
+    const handleMouseMove = (e) => {
+      const cards = stage.querySelectorAll(".tech-pill");
+      cards.forEach((card) => {
+        const r = card.getBoundingClientRect();
+        const d = Math.hypot(
+          e.clientX - (r.left + r.width / 2),
+          e.clientY - (r.top + r.height / 2)
+        );
+        const p = gsap.utils.clamp(
+          0,
+          1,
+          gsap.utils.mapRange(0, radius, 1, 0, d)
+        );
+        gsap.to(card, {
+          scale: 1 + (maxScale - 1) * p,
+          duration: dur,
+          overwrite: "auto",
+          ease: "power2.out",
+        });
+      });
+    };
+
+    const handleMouseLeave = () => {
+      const cards = stage.querySelectorAll(".tech-pill");
+      cards.forEach((card) => {
+        gsap.to(card, {
+          scale: 1,
+          duration: 0.4,
+          overwrite: "auto",
+          ease: "power2.out",
+        });
+      });
+    };
+
+    stage.addEventListener("mousemove", handleMouseMove);
+    stage.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      stage.removeEventListener("mousemove", handleMouseMove);
+      stage.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, []);
+
   return (
-    <div className="w-full max-w-[1200px] mx-auto px-6">
+    <div className="w-full max-w-[1200px] mx-auto px-6" ref={stageRef}>
       {/* Section Label */}
       <p className="section-label">// 03 Stack</p>
 

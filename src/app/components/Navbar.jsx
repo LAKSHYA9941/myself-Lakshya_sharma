@@ -10,6 +10,32 @@ const links = [
   { path: "contact", label: "Contact" },
 ];
 
+function RollingText({ text, active }) {
+  return (
+    <span className="relative inline-flex overflow-hidden">
+      {text.split("").map((ch, i) => (
+        <span key={i} className="relative inline-block overflow-hidden">
+          <span
+            className={`roll-char-top ${
+              active ? "text-accent font-semibold" : "text-muted"
+            }`}
+            style={{ transitionDelay: `${i * 25}ms` }}
+          >
+            {ch === " " ? "\u00A0" : ch}
+          </span>
+          <span
+            className="roll-char-bottom"
+            style={{ transitionDelay: `${i * 25}ms` }}
+            aria-hidden="true"
+          >
+            {ch === " " ? "\u00A0" : ch}
+          </span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
 export default function Navbar() {
   const [active, setActive] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -121,11 +147,9 @@ export default function Navbar() {
                 <Link
                   href={`/#${path}`}
                   onClick={(e) => handleClick(e, path)}
-                  className={`relative px-4 py-2 font-mono text-[13px] font-medium tracking-wide uppercase transition-colors duration-200 ${
-                    isActive ? "text-primary" : "text-muted"
-                  }`}
+                  className="nav-fill-target group relative px-4 py-2 font-mono text-[13px] font-medium tracking-wide uppercase transition-colors duration-200"
                 >
-                  {label}
+                  <RollingText text={label} active={isActive} />
                   {isActive && (
                     <motion.span
                       layoutId="nav-underline"
@@ -184,11 +208,9 @@ export default function Navbar() {
                 key={path}
                 href={`/#${path}`}
                 onClick={(e) => handleClick(e, path)}
-                className={`text-2xl font-mono font-medium tracking-wide uppercase transition-colors duration-200 ${
-                  active === path ? "text-accent" : "text-primary"
-                }`}
+                className="group text-2xl font-mono font-medium tracking-wide uppercase transition-colors duration-200"
               >
-                {label}
+                <RollingText text={label} active={active === path} />
               </Link>
             ))}
           </motion.div>

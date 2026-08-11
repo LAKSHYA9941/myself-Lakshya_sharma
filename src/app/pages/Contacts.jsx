@@ -87,7 +87,7 @@ export default function Contacts() {
         {contactInfo.map((item) => {
           const Icon = item.icon;
           const inner = (
-            <div className="glass-card flex items-center gap-4 p-5 transition-all duration-200 cursor-default">
+            <div className="contact-fill-target glass-card flex items-center gap-4 p-5 transition-all duration-200 cursor-default">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-200 bg-surface-hover text-primary">
                 <Icon size={18} />
               </div>
@@ -133,7 +133,7 @@ export default function Contacts() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={s.label}
-              className="flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 hover:opacity-80 bg-surface border border-glass-border text-primary"
+              className="social-fill-target flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 hover:opacity-80 bg-surface border border-glass-border text-primary"
             >
               <Icon size={18} />
             </a>

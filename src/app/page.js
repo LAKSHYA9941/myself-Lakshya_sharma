@@ -8,8 +8,11 @@ import Projects from "./pages/Projects";
 import Contacts from "./pages/Contacts";
 import Navbar from "./components/Navbar";
 import CursorGlow from "./components/CursorGlow";
+import useGSAPFillHover from "./Hooks/useGSAPFillHover";
 
 export default function Page() {
+  useGSAPFillHover();
+
   return (
     <>
       <CursorGlow />

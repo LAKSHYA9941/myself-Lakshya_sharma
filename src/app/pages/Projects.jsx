@@ -1,7 +1,100 @@
 "use client";
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
 import Image from "next/image";
+import gsap from "gsap";
+
+/* ------------------------------------------------------------------ */
+/*  MAGNETIC IMAGE COMPONENT                                           */
+/* ------------------------------------------------------------------ */
+
+function MagneticImage({
+  src,
+  alt,
+  className = "",
+  fill = true,
+  sizes,
+  priority,
+  loading,
+}) {
+  const containerRef = useRef(null);
+  const imageRef = useRef(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const image = imageRef.current;
+    if (!container || !image) return;
+
+    gsap.set(container, { perspective: 800 });
+    gsap.set(image, { transformStyle: "preserve-3d", transformOrigin: "center center" });
+
+    // Performant GSAP quickTo interpolators
+    const xTo = gsap.quickTo(image, "x", { duration: 0.35, ease: "power2.out" });
+    const yTo = gsap.quickTo(image, "y", { duration: 0.35, ease: "power2.out" });
+    const rotXTo = gsap.quickTo(image, "rotationX", { duration: 0.35, ease: "power2.out" });
+    const rotYTo = gsap.quickTo(image, "rotationY", { duration: 0.35, ease: "power2.out" });
+    const scaleTo = gsap.quickTo(image, "scale", { duration: 0.35, ease: "power2.out" });
+
+    const updatePosition = (e) => {
+      const rect = container.getBoundingClientRect();
+      const normX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      const normY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+
+      // Magnetic translate (12px max), tilt (3deg max), scale 1.04
+      xTo(normX * 12);
+      yTo(normY * 12);
+      rotXTo(-normY * 3);
+      rotYTo(normX * 3);
+      scaleTo(1.04);
+    };
+
+    const handleMouseEnter = (e) => {
+      updatePosition(e);
+    };
+
+    const handleMouseMove = (e) => {
+      updatePosition(e);
+    };
+
+    const handleMouseLeave = () => {
+      xTo(0);
+      yTo(0);
+      rotXTo(0);
+      rotYTo(0);
+      scaleTo(1);
+    };
+
+    container.addEventListener("mouseenter", handleMouseEnter);
+    container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      container.removeEventListener("mouseenter", handleMouseEnter);
+      container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative w-full h-full overflow-hidden select-none cursor-pointer"
+    >
+      <div ref={imageRef} className="relative w-full h-full transform-gpu pointer-events-none">
+        <Image
+          src={src}
+          alt={alt}
+          fill={fill}
+          sizes={sizes}
+          priority={priority}
+          loading={loading}
+          className={className}
+        />
+      </div>
+    </div>
+  );
+}
 
 /* ------------------------------------------------------------------ */
 /*  DATA                                                               */
@@ -114,7 +207,7 @@ function FeaturedCard({ project }) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="glass-card neon-shadow relative overflow-hidden flex flex-col md:flex-row"
+      className="project-fill-target glass-card neon-shadow relative overflow-hidden flex flex-col md:flex-row"
     >
       <div className="p-8 md:p-12 flex-1">
         {/* Top row: status + type */}
@@ -168,8 +261,8 @@ function FeaturedCard({ project }) {
       </div>
 
       {project.image && (
-        <div className="relative h-64 md:h-auto md:w-1/3 lg:w-2/5 border-t md:border-t-0 md:border-l border-glass-border">
-          <Image
+        <div className="relative h-64 md:h-auto md:w-1/3 lg:w-2/5 border-t md:border-t-0 md:border-l border-glass-border overflow-hidden">
+          <MagneticImage
             src={project.image}
             alt={project.name}
             fill
@@ -193,16 +286,16 @@ function ProjectCard({ project, index }) {
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
       transition={{ delay: index * 0.05 }}
-      className="glass-card flex flex-col overflow-hidden group"
+      className="project-fill-target glass-card flex flex-col overflow-hidden group"
     >
-      {/* Image */}
+      {/* Image Container */}
       <div className="relative aspect-video overflow-hidden border-b border-glass-border">
-        <Image
+        <MagneticImage
           src={project.image}
           alt={project.name}
           fill
           sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          className="object-cover"
           loading="lazy"
         />
       </div>

@@ -1,24 +1,13 @@
 "use client";
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
+import gsap from "gsap";
 
-const WORDS_LINE_1 = ["I", "build", "full-stack", "products"];
-const WORDS_LINE_2 = ["that", "ship."];
-
-const wordAnimation = {
-  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      duration: 0.35,
-      delay: i * 0.08,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  }),
-};
+const WORDS_LINE_1_BEFORE = ["I"];
+const KEYWORDS = ["create", "break", "fix", "build"];
+const WORDS_LINE_1_AFTER = [];
+const WORDS_LINE_2 = ["products", "that", "ship."];
 
 const fadeIn = {
   hidden: { opacity: 0, y: 12 },
@@ -39,8 +28,21 @@ const imageReveal = {
   },
 };
 
+const getRandomOffset = (distance = 50) => {
+  const angle = Math.random() * Math.PI * 2;
+  return {
+    x: Math.cos(angle) * distance,
+    y: Math.sin(angle) * distance,
+    rotation: (Math.random() - 0.5) * 18,
+  };
+};
+
 export default function LandingSection() {
   const sectionRef = useRef(null);
+  const headlineRef = useRef(null);
+  const keywordRef = useRef(null);
+  const [wordIndex, setWordIndex] = useState(0);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -48,6 +50,105 @@ export default function LandingSection() {
 
   const heroY = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+
+  useEffect(() => {
+    let isCancelled = false;
+
+    const animateHeadline = async () => {
+      if (!headlineRef.current) return;
+
+      const staticWords = headlineRef.current.querySelectorAll(".hero-word");
+      const keywordEl = keywordRef.current;
+      const allWordEls = [...staticWords, keywordEl].filter(Boolean);
+
+      // Hide elements immediately
+      allWordEls.forEach((el) => {
+        const offset = getRandomOffset(55);
+        gsap.set(el, {
+          x: offset.x,
+          y: offset.y,
+          rotation: offset.rotation,
+          opacity: 0,
+          scale: 0.85,
+        });
+      });
+
+      // Initial 1 second delay before reveal starts
+      await new Promise((r) => setTimeout(r, 1000));
+      if (isCancelled) return;
+
+      // 1. Initial word reveal from random directions
+      await gsap.to(allWordEls, {
+        x: 0,
+        y: 0,
+        rotation: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+        stagger: 0.08,
+        ease: "back.out(1.3)",
+      });
+
+      // Pause before keyword sequence
+      await new Promise((r) => setTimeout(r, 650));
+
+      // 2. Word rotation: create -> break -> fix -> build
+      for (let i = 0; i < KEYWORDS.length - 1; i++) {
+        if (isCancelled || !keywordRef.current) break;
+
+        // Outgoing keyword word fades out towards a random direction
+        const exitOffset = getRandomOffset(40);
+        await gsap.to(keywordRef.current, {
+          x: exitOffset.x,
+          y: exitOffset.y,
+          rotation: exitOffset.rotation,
+          opacity: 0,
+          scale: 0.8,
+          duration: 0.3,
+          ease: "power2.in",
+        });
+
+        if (isCancelled) break;
+
+        // Update state to next word
+        setWordIndex(i + 1);
+
+        // Brief delay for React DOM render
+        await new Promise((r) => setTimeout(r, 45));
+
+        if (!keywordRef.current) break;
+
+        // Incoming keyword word fades in from a new random direction
+        const enterOffset = getRandomOffset(50);
+        gsap.set(keywordRef.current, {
+          x: enterOffset.x,
+          y: enterOffset.y,
+          rotation: enterOffset.rotation,
+          opacity: 0,
+          scale: 0.85,
+        });
+
+        await gsap.to(keywordRef.current, {
+          x: 0,
+          y: 0,
+          rotation: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.45,
+          ease: "back.out(1.4)",
+        });
+
+        // Short hold on current word
+        await new Promise((r) => setTimeout(r, 800));
+      }
+    };
+
+    animateHeadline();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
 
   const handleDownload = useCallback(async () => {
     const filePath = "/Lakshya _CV2.pdf";
@@ -77,8 +178,7 @@ export default function LandingSection() {
     }
   }, []);
 
-  const totalWordCount = WORDS_LINE_1.length + WORDS_LINE_2.length;
-  const subDelay = totalWordCount * 0.08 + 0.2;
+  const subDelay = 1.1;
 
   return (
     <section
@@ -99,33 +199,48 @@ export default function LandingSection() {
           <div className="flex-1 min-w-0">
             {/* Heading */}
             <div className="mb-8 border-l-2 border-accent pl-6">
-              <h1 className="font-extrabold text-[clamp(40px,6vw,84px)] leading-[1.05] tracking-tight text-highlight">
-                <span className="flex flex-wrap gap-x-[0.3em]">
-                  {WORDS_LINE_1.map((word, i) => (
-                    <motion.span
+              <h1
+                ref={headlineRef}
+                className="font-extrabold text-[clamp(40px,6vw,84px)] leading-[1.1] tracking-tight text-highlight"
+              >
+                <span className="flex flex-wrap items-center gap-x-[0.35em]">
+                  {WORDS_LINE_1_BEFORE.map((word) => (
+                    <span
                       key={word}
-                      custom={i}
-                      initial="hidden"
-                      animate="visible"
-                      variants={wordAnimation}
-                      className="inline-block"
+                      className="hero-word inline-block transform-gpu"
                     >
                       {word}
-                    </motion.span>
+                    </span>
+                  ))}
+
+                  {/* Fixed-width slot so "full-stack" never shifts position */}
+                  <span className="relative inline-flex items-center justify-center text-accent font-extrabold min-w-[3.6em] sm:min-w-[3.8em] text-center">
+                    <span
+                      ref={keywordRef}
+                      className="keyword-word inline-block transform-gpu text-accent"
+                    >
+                      {KEYWORDS[wordIndex]}
+                    </span>
+                  </span>
+
+                  {WORDS_LINE_1_AFTER.map((word) => (
+                    <span
+                      key={word}
+                      className="hero-word inline-block transform-gpu"
+                    >
+                      {word}
+                    </span>
                   ))}
                 </span>
-                <span className="flex flex-wrap gap-x-[0.3em]">
-                  {WORDS_LINE_2.map((word, i) => (
-                    <motion.span
+
+                <span className="flex flex-wrap items-center gap-x-[0.35em]">
+                  {WORDS_LINE_2.map((word) => (
+                    <span
                       key={word}
-                      custom={i + WORDS_LINE_1.length}
-                      initial="hidden"
-                      animate="visible"
-                      variants={wordAnimation}
-                      className="inline-block"
+                      className="hero-word inline-block transform-gpu"
                     >
                       {word}
-                    </motion.span>
+                    </span>
                   ))}
                 </span>
               </h1>

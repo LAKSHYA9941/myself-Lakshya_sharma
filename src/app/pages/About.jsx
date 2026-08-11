@@ -29,7 +29,7 @@ export default function About() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
-        className="glass-card p-8 md:p-12 lg:p-16"
+        className="project-fill-target glass-card p-8 md:p-12 lg:p-16"
       >
         <div className="space-y-6 max-w-[720px]">
           {paragraphs.map((text, i) => (
