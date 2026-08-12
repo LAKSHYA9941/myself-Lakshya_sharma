@@ -63,11 +63,11 @@
   }
 
   .glass-card {
-    @apply bg-surface border border-glass-border rounded-2xl backdrop-blur-[20px] backdrop-saturate-[180%] transition-colors duration-250;
+    @apply bg-surface border border-glass-border rounded-2xl backdrop-blur-[20px] backdrop-saturate-[180%] transition-all duration-250;
   }
 
   .glass-card:hover {
-    @apply bg-surface-hover border-glass-border-hover;
+    @apply border-glass-border-hover;
   }
 
   .brutalist-border {
@@ -205,22 +205,28 @@
     animation: pulse-ring 2s ease-out infinite;
   }
 
-  /* ── GSAP Fill Hover Circle ── */
+  /* ── GSAP Mouse-Aware Fill Hover Circle ── */
   .gsap-fill-circle {
     position: absolute;
     top: 0;
     left: 0;
-    width: 80px;
-    height: 80px;
-    background-color: #94a3b8; /* Light shade of slate */
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.09) 0%,
+      rgba(255, 255, 255, 0.07) 65%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
     border-radius: 50%;
-    z-index: 1;
+    z-index: 0;
     pointer-events: none;
-    opacity: 0.2;
-    will-change: transform;
+    opacity: 0;
+    will-change: transform, opacity;
   }
 
   /* All direct children of fill targets stay above the circle */
+  .glass-card > *:not(.gsap-fill-circle),
   .btn-primary > *:not(.gsap-fill-circle),
   .btn-ghost > *:not(.gsap-fill-circle),
   .nav-fill-target > *:not(.gsap-fill-circle),
@@ -228,7 +234,7 @@
   .social-fill-target > *:not(.gsap-fill-circle),
   .project-fill-target > *:not(.gsap-fill-circle) {
     position: relative;
-    z-index: 2;
+    z-index: 1;
   }
 }
 

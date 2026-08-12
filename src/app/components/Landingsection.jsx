@@ -151,7 +151,7 @@ export default function LandingSection() {
   }, []);
 
   const handleDownload = useCallback(async () => {
-    const filePath = "/Lakshya _CV2.pdf";
+    const filePath = "/Lakshya_Sharma_Resume.pdf";
     try {
       const res = await fetch(filePath, { method: "HEAD" });
       if (!res.ok) throw new Error("Missing file");
