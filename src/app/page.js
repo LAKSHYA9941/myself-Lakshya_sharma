@@ -22,7 +22,7 @@ export default function Page() {
 
         <section
           id="about"
-          className="flex items-center py-[var(--spacing-section)]"
+          className="py-[var(--spacing-section)]"
         >
           <About />
         </section>

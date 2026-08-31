@@ -308,7 +308,7 @@ export default function LandingSection() {
             {/* Glass card frame */}
             <div className="relative w-64 h-80 sm:w-72 sm:h-[22rem] lg:w-80 lg:h-96 rounded-2xl overflow-hidden border-2 border-accent/30 bg-surface backdrop-blur-sm shadow-[4px_4px_0px_var(--color-accent)]">
               <Image
-                src="/me2.jpg"
+                src="/myphoto.jpeg"
                 alt="Lakshya Sharma"
                 fill
                 sizes="(min-width: 1024px) 320px, (min-width: 640px) 288px, 256px"

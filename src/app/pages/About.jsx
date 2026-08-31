@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import GithubContributions from "../components/GithubContributions";
 
 const paragraphs = [
   "I'm a Full Stack Developer based in Delhi who builds things end-to-end — from database schema to polished mobile UI.",
@@ -24,6 +25,7 @@ export default function About() {
       {/* Section Label */}
       <p className="section-label">// 01 About</p>
 
+      {/* Main About Card */}
       <motion.div
         variants={cardReveal}
         initial="hidden"
@@ -31,21 +33,25 @@ export default function About() {
         viewport={{ once: true, amount: 0.3 }}
         className="project-fill-target glass-card p-8 md:p-12 lg:p-16"
       >
-        <div className="space-y-6 max-w-[720px]">
+        <div className="space-y-6 max-w-[760px] mx-auto text-center">
           {paragraphs.map((text, i) => (
             <p
               key={i}
-              className="text-base md:text-lg text-primary leading-relaxed"
+              className="text-base md:text-lg text-primary leading-relaxed text-center"
             >
               {text}
             </p>
           ))}
 
-          <p className="text-sm font-mono text-muted pt-6 mt-6 border-t border-glass-border">
+          <p className="text-sm font-mono text-muted pt-6 mt-6 border-t border-glass-border text-center">
             {education}
           </p>
         </div>
       </motion.div>
+
+      {/* GitHub Contributions Heatmap */}
+      <GithubContributions username="LAKSHYA9941" />
     </div>
   );
 }
+
